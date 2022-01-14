@@ -1,45 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { getScropInfo } from "./fetch-scorp-data";
-
-//import colorNames from "./color-names";
-
-//        {colorNames.name("#2F6D9B")[1]}
-
-async function loadMyAsyncData() {
-  return await getScropInfo("6222");
-}
 
 class App extends React.Component {
-  state = {
-    externalData: null,
-  };
-  sidebarContent = null;
-
-  componentDidMount() {
-    this._asyncRequest = loadMyAsyncData().then((externalData) => {
-      this._asyncRequest = null;
-      this.setState({ externalData });
-    });
-  }
-
-  componentWillUnmount() {
-    if (this._asyncRequest) {
-      this._asyncRequest.cancel();
-    }
-  }
-
   render() {
-    if (this.state.externalData === null) {
-      this.sidebarContent = (
-        <div>
-          <div>Loading...</div>
-          <img src={logo} className="App-logo" alt="logo" />
-        </div>
-      );
-    }
-
     return (
       <div className="App">
         <div className="grid-wrapper">

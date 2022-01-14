@@ -1,0 +1,204 @@
+{
+  "outline_type": {
+    "dark": {
+      "occurances": 1908,
+      "rarity": "2,19%"
+    },
+    "light": {
+      "occurances": 1053,
+      "rarity": "3,11%"
+    },
+    "white": {
+      "occurances": 230,
+      "rarity": "6,2.3%"
+    }
+  },
+  "bg_style": {
+    "frame": {
+      "occurances": 1043,
+      "rarity": "3,10%"
+    },
+    "star": {
+      "occurances": 912,
+      "rarity": "3,9.1%"
+    },
+    "circle": {
+      "occurances": 1605,
+      "rarity": "2,16%"
+    },
+    "square": {
+      "occurances": 2516,
+      "rarity": "1,25%"
+    }
+  },
+  "claw_left": {
+    "big": {
+      "occurances": 2946,
+      "rarity": "1,29%"
+    },
+    "missing": {
+      "occurances": 313,
+      "rarity": "5,3.1%"
+    },
+    "ball": {
+      "occurances": 547,
+      "rarity": "4,5.5%"
+    },
+    "mushroom": {
+      "occurances": 386,
+      "rarity": "5,3.9%"
+    },
+    "scissors": {
+      "occurances": 630,
+      "rarity": "4,6.3%"
+    }
+  },
+  "claw_right": {
+    "big": {
+      "occurances": 2924,
+      "rarity": "1,29%"
+    },
+    "missing": {
+      "occurances": 317,
+      "rarity": "5,3.2%"
+    },
+    "ball": {
+      "occurances": 532,
+      "rarity": "4,5.3%"
+    },
+    "mushroom": {
+      "occurances": 366,
+      "rarity": "5,3.7%"
+    },
+    "scissors": {
+      "occurances": 637,
+      "rarity": "4,6.4%"
+    }
+  },
+  "claws_unique": {
+    "true": {
+      "occurances": 427,
+      "rarity": "5,4.3%"
+    }
+  },
+  "has_cigarette": {
+    "true": {
+      "occurances": 78,
+      "rarity": "6,0.8%"
+    }
+  },
+  "legs": {
+    "stubby": {
+      "occurances": 764,
+      "rarity": "4,7.6%"
+    },
+    "insect": {
+      "occurances": 2442,
+      "rarity": "1,24%"
+    },
+    "skinny": {
+      "occurances": 498,
+      "rarity": "5,5.0%"
+    }
+  },
+  "tail": {
+    "syringe": {
+      "occurances": 829,
+      "rarity": "3,8.3%"
+    },
+    "fat": {
+      "occurances": 3240,
+      "rarity": "1,32%"
+    },
+    "ball": {
+      "occurances": 349,
+      "rarity": "5,3.5%"
+    },
+    "missing": {
+      "occurances": 190,
+      "rarity": "6,1.9%"
+    }
+  },
+  "bloody_tail": {
+    "true": {
+      "occurances": 213,
+      "rarity": "6,2.1%"
+    }
+  },
+  "has_matches": {
+    "true": {
+      "occurances": 60,
+      "rarity": "6,0.6%"
+    }
+  },
+  "has_halo": {
+    "true": {
+      "occurances": 27,
+      "rarity": "6,0.3%"
+    }
+  },
+  "multicolored": {
+    "true": {
+      "occurances": 2417,
+      "rarity": "1,24%"
+    }
+  },
+  "colored_claws": {
+    "true": {
+      "occurances": 1188,
+      "rarity": "3,12%"
+    }
+  },
+  "colored_core": {
+    "true": {
+      "occurances": 1128,
+      "rarity": "3,11%"
+    }
+  },
+  "colored_tail": {
+    "true": {
+      "occurances": 1134,
+      "rarity": "3,11%"
+    }
+  },
+  "multicolor_type": {
+    "stripes": {
+      "occurances": 1077,
+      "rarity": "3,11%"
+    },
+    "solid": {
+      "occurances": 1340,
+      "rarity": "2,13%"
+    }
+  },
+  "false_face": {
+    "tepid": {
+      "occurances": 183,
+      "rarity": "6,1.8%"
+    },
+    "frown": {
+      "occurances": 148,
+      "rarity": "6,1.5%"
+    },
+    "smile": {
+      "occurances": 186,
+      "rarity": "6,1.9%"
+    }
+  },
+  "evil_eye": {
+    "blue": {
+      "occurances": 178,
+      "rarity": "6,1.8%"
+    },
+    "red": {
+      "occurances": 175,
+      "rarity": "6,1.8%"
+    }
+  },
+  "no_eyes": {
+    "true": {
+      "occurances": 168,
+      "rarity": "6,1.7%"
+    }
+  }
+}
