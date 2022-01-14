@@ -1,4 +1,4 @@
-import { getScorpMetadata, getRarity } from "./fetch-scorp-data";
+import { getScorpMetadata, getRarity, getColors } from "./scorp-data";
 
 test("Can fetch attributes of a scorp", () => {
   // Given
@@ -73,6 +73,25 @@ test("Can compute scorp rarity", () => {
 
   // When
   const result = getRarity(`${scorpId}`);
+
+  // Then
+  expect(result).toEqual(expectedOutput);
+});
+
+test("Can name scorp colors", () => {
+  // Given
+  const scorpId = 1136;
+  const expectedOutput = {
+    outline_color: "Black",
+    body_color: "Spring Green",
+    eye_color: "Spring Green",
+    bg_color: "Blue",
+    bg2_color: "Jungle Green",
+    secondary_color: "Pale Canary",
+  };
+
+  // When
+  const result = getColors(`${scorpId}`);
 
   // Then
   expect(result).toEqual(expectedOutput);

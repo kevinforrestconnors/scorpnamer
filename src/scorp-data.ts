@@ -1,4 +1,5 @@
-import { ScorpMetadata, AttributeStats, RarityProfile } from "./types";
+import { ScorpMetadata, AttributeStats, RarityProfile, Colors } from "./types";
+import colorNames from "./color-names";
 
 const metadata = require("./metadata.json");
 
@@ -32,4 +33,14 @@ export function getRarity(scorpId: string): RarityProfile {
     rarity,
     rareTraits,
   };
+}
+
+export function getColors(scorpId: string): Colors {
+  const colors = getScorpMetadata(scorpId).colors;
+
+  for (const [location, color] of Object.entries(colors)) {
+    colors[location] = colorNames.name(color)[1];
+  }
+
+  return colors;
 }

@@ -69,16 +69,18 @@ export type RarityProfile = {
   rareTraits: Partial<AttributeStats>;
 };
 
+export type Colors = {
+  outline_color: string;
+  body_color: string;
+  eye_color: string;
+  bg_color: string;
+  bg2_color: string;
+  secondary_color: string;
+};
+
 export type ScorpMetadata = {
   image: string;
   image_large: string;
   attributes: Attributes;
-  colors: {
-    outline_color: string;
-    body_color: string;
-    eye_color: string;
-    bg_color: string;
-    bg2_color: string;
-    secondary_color: string;
-  };
+  colors: Colors;
 };
