@@ -3,7 +3,6 @@
 }
 
 .App-logo {
-  height: 40vmin;
   pointer-events: none;
 }
 
@@ -35,4 +34,65 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.main-head {
+  grid-area: header;
+}
+.content {
+  grid-area: content;
+  justify-content: center;
+  align-items: center;
+}
+
+.content h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.content div {
+  margin: 10px 0;
+}
+.main-nav {
+  grid-area: nav;
+}
+.side {
+  grid-area: sidebar;
+}
+.ad {
+  grid-area: ad;
+}
+.main-footer {
+  grid-area: footer;
+}
+
+.grid-wrapper {
+  display: grid;
+  gap: 20px;
+  grid-template-areas:
+    "header"
+    "nav"
+    "sidebar"
+    "content"
+    "footer";
+}
+
+@media (min-width: 700px) {
+  .grid-wrapper {
+    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-areas:
+      "header  header  header"
+      "sidebar content a"
+      "sidebar content a"
+      "footer  footer  footer";
+  }
+  nav ul {
+    flex-direction: column;
+  }
+}
+
+.main-footer {
+  font-size: 0.7em;
 }
