@@ -44,3 +44,17 @@ export function getColors(scorpId: string): Colors {
 
   return colors;
 }
+
+export function hasAttribute(
+  scorpId: string,
+  attributeName: string,
+  attributeValue: string | boolean
+): boolean {
+  const scorpMetadata = getScorpMetadata(scorpId).attributes;
+  return scorpMetadata[attributeName] === attributeValue;
+}
+
+export function isMono(scorpId: string) {
+  const colors = getColors(scorpId);
+  return colors.body_color === colors.bg2_color;
+}

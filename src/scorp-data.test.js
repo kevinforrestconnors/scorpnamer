@@ -1,8 +1,14 @@
-import { getScorpMetadata, getRarity, getColors } from "./scorp-data";
+import {
+  getScorpMetadata,
+  getRarity,
+  getColors,
+  hasAttribute,
+  isMono
+} from "./scorp-data";
 
 test("Can fetch attributes of a scorp", () => {
   // Given
-  const scorpId = 1136;
+  const scorpId = "1136";
   const expectedOutput = {
     image: "1136.png",
     image_large: "1136_large.png",
@@ -38,7 +44,7 @@ test("Can fetch attributes of a scorp", () => {
   };
 
   // When
-  const result = getScorpMetadata(`${scorpId}`);
+  const result = getScorpMetadata(scorpId);
 
   // Then
   expect(result).toEqual(expectedOutput);
@@ -46,7 +52,7 @@ test("Can fetch attributes of a scorp", () => {
 
 test("Can compute scorp rarity", () => {
   // Given
-  const scorpId = 1136;
+  const scorpId = "1136";
   const expectedOutput = {
     rarity: 9,
     rareTraits: {
@@ -72,7 +78,7 @@ test("Can compute scorp rarity", () => {
   };
 
   // When
-  const result = getRarity(`${scorpId}`);
+  const result = getRarity(scorpId);
 
   // Then
   expect(result).toEqual(expectedOutput);
@@ -80,7 +86,7 @@ test("Can compute scorp rarity", () => {
 
 test("Can name scorp colors", () => {
   // Given
-  const scorpId = 1136;
+  const scorpId = "1136";
   const expectedOutput = {
     outline_color: "Black",
     body_color: "Spring Green",
@@ -91,8 +97,53 @@ test("Can name scorp colors", () => {
   };
 
   // When
-  const result = getColors(`${scorpId}`);
+  const result = getColors(scorpId);
 
   // Then
   expect(result).toEqual(expectedOutput);
+});
+
+test("Can check attributes of scrop", () => {
+  // Given
+  const scorpId = "1136";
+  let allTrue = true;
+
+  // When
+
+  allTrue = allTrue && hasAttribute(scorpId, "outline_type", "black");
+  allTrue = allTrue && hasAttribute(scorpId, "bg_style", "blank");
+  allTrue = allTrue && hasAttribute(scorpId, "claw_left", "ball");
+  allTrue = allTrue && hasAttribute(scorpId, "claw_right", "ball");
+  allTrue = allTrue && hasAttribute(scorpId, "has_cigarette", false);
+  allTrue = allTrue && hasAttribute(scorpId, "legs", "insect");
+  allTrue = allTrue && hasAttribute(scorpId, "tail", "normal");
+  allTrue = allTrue && hasAttribute(scorpId, "bloody_tail", false);
+  allTrue = allTrue && hasAttribute(scorpId, "has_matches", false);
+  allTrue = allTrue && hasAttribute(scorpId, "has_halo", false);
+  allTrue = allTrue && hasAttribute(scorpId, "multicolored", false);
+  allTrue = allTrue && hasAttribute(scorpId, "colored_claws", false);
+  allTrue = allTrue && hasAttribute(scorpId, "colored_core", false);
+  allTrue = allTrue && hasAttribute(scorpId, "colored_tail", false);
+  allTrue = allTrue && hasAttribute(scorpId, "multicolor_type", "none");
+  allTrue = allTrue && hasAttribute(scorpId, "false_face", "none");
+  allTrue = allTrue && hasAttribute(scorpId, "evil_eye", "none");
+  allTrue = allTrue && hasAttribute(scorpId, "no_eyes", false);
+  allTrue = allTrue && hasAttribute(scorpId, "claws_unique", false);
+
+  // Then
+  expect(allTrue).toEqual(true);
+});
+
+test("Can check for monos", () => {
+  // Given
+  const mono = "4230";
+  const notMono = "1136";
+
+  // When
+  const isMonoMono = isMono(mono);
+  const isNotMonoMono = isMono(notMono);
+
+  // Then
+  expect(isMonoMono).toEqual(true);
+  expect(isNotMonoMono).toEqual(false);
 });

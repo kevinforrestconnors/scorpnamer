@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import Sidebar from "./Sidebar";
 
 class App extends React.Component {
   render() {
@@ -9,7 +10,9 @@ class App extends React.Component {
           <header className="main-head">
             <h1>Abandoned Scorpions Name Generator</h1>
           </header>
-          <aside className="side">{this.sidebarContent}</aside>
+          <aside className="side">
+            <Sidebar />
+          </aside>
           <article className="content">
             <h2>Welcome to ScropNamer.</h2>
             <div>
