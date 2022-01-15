@@ -3,7 +3,9 @@ import {
   getRarity,
   getColors,
   hasAttribute,
-  isMono
+  isMono,
+  isBaller,
+  isDruglord,
 } from "./scorp-data";
 
 test("Can fetch attributes of a scorp", () => {
@@ -140,10 +142,38 @@ test("Can check for monos", () => {
   const notMono = "1136";
 
   // When
-  const isMonoMono = isMono(mono);
-  const isNotMonoMono = isMono(notMono);
+  const isMonoAMono = isMono(mono);
+  const isNotMonoAMono = isMono(notMono);
 
   // Then
-  expect(isMonoMono).toEqual(true);
-  expect(isNotMonoMono).toEqual(false);
+  expect(isMonoAMono).toEqual(true);
+  expect(isNotMonoAMono).toEqual(false);
+});
+
+test("Can check for ballers", () => {
+  // Given
+  const baller = "4913";
+  const notBaller = "1136";
+
+  // When
+  const isBallerABaller = isBaller(baller);
+  const isNotBallerABaller = isBaller(notBaller);
+
+  // Then
+  expect(isBallerABaller).toEqual(true);
+  expect(isNotBallerABaller).toEqual(false);
+});
+
+test("Can check for druglords", () => {
+  // Given
+  const druglord = "5730";
+  const notDruglord = "1136";
+
+  // When
+  const isDruglordADruglord = isDruglord(druglord);
+  const isNotDruglordADruglord = isDruglord(notDruglord);
+
+  // Then
+  expect(isDruglordADruglord).toEqual(true);
+  expect(isNotDruglordADruglord).toEqual(false);
 });

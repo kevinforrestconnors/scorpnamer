@@ -54,7 +54,25 @@ export function hasAttribute(
   return scorpMetadata[attributeName] === attributeValue;
 }
 
-export function isMono(scorpId: string) {
+export function isMono(scorpId: string): boolean {
   const colors = getColors(scorpId);
   return colors.body_color === colors.bg2_color;
+}
+
+export function isBaller(scorpId: string): boolean {
+  const scorpMetadata = getScorpMetadata(scorpId).attributes;
+  return (
+    scorpMetadata.claw_left === "ball" &&
+    scorpMetadata.claw_right === "ball" &&
+    scorpMetadata.tail === "ball"
+  );
+}
+
+export function isDruglord(scorpId: string): boolean {
+  const scorpMetadata = getScorpMetadata(scorpId).attributes;
+  return (
+    scorpMetadata.claw_left === "mushroom" &&
+    scorpMetadata.claw_right === "mushroom" &&
+    scorpMetadata.tail === "syringe"
+  );
 }
