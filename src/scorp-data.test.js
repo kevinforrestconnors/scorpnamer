@@ -6,6 +6,7 @@ import {
   isMono,
   isBaller,
   isDruglord,
+  isNatty,
 } from "./scorp-data";
 
 test("Can fetch attributes of a scorp", () => {
@@ -90,12 +91,12 @@ test("Can name scorp colors", () => {
   // Given
   const scorpId = "1136";
   const expectedOutput = {
-    outline_color: "Black",
-    body_color: "Spring Green",
-    eye_color: "Spring Green",
-    bg_color: "Blue",
-    bg2_color: "Jungle Green",
-    secondary_color: "Pale Canary",
+    outline_color: "black",
+    body_color: "spring green",
+    eye_color: "spring green",
+    bg_color: "blue",
+    bg2_color: "jungle green",
+    secondary_color: "pale canary",
   };
 
   // When
@@ -142,12 +143,12 @@ test("Can check for monos", () => {
   const notMono = "1136";
 
   // When
-  const isMonoAMono = isMono(mono);
-  const isNotMonoAMono = isMono(notMono);
+  const is4230AMono = isMono(mono);
+  const is1136MonoAMono = isMono(notMono);
 
   // Then
-  expect(isMonoAMono).toEqual(true);
-  expect(isNotMonoAMono).toEqual(false);
+  expect(is4230AMono).toEqual(true);
+  expect(is1136MonoAMono).toEqual(false);
 });
 
 test("Can check for ballers", () => {
@@ -156,12 +157,12 @@ test("Can check for ballers", () => {
   const notBaller = "1136";
 
   // When
-  const isBallerABaller = isBaller(baller);
-  const isNotBallerABaller = isBaller(notBaller);
+  const is4913ABaller = isBaller(baller);
+  const is1136allerABaller = isBaller(notBaller);
 
   // Then
-  expect(isBallerABaller).toEqual(true);
-  expect(isNotBallerABaller).toEqual(false);
+  expect(is4913ABaller).toEqual(true);
+  expect(is1136allerABaller).toEqual(false);
 });
 
 test("Can check for druglords", () => {
@@ -170,10 +171,24 @@ test("Can check for druglords", () => {
   const notDruglord = "1136";
 
   // When
-  const isDruglordADruglord = isDruglord(druglord);
-  const isNotDruglordADruglord = isDruglord(notDruglord);
+  const is5730ADruglord = isDruglord(druglord);
+  const is1136ADruglord = isDruglord(notDruglord);
 
   // Then
-  expect(isDruglordADruglord).toEqual(true);
-  expect(isNotDruglordADruglord).toEqual(false);
+  expect(is5730ADruglord).toEqual(true);
+  expect(is1136ADruglord).toEqual(false);
+});
+
+test("Can check for natties", () => {
+  // Given
+  const natty = "9512";
+  const notNatty = "1136";
+
+  // When
+  const is9512ANatty = isNatty(natty);
+  const is1136ANatty = isNatty(notNatty);
+
+  // Then
+  expect(is9512ANatty).toEqual(true);
+  expect(is1136ANatty).toEqual(false);
 });

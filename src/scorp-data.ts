@@ -1,10 +1,9 @@
-import { ScorpMetadata, AttributeStats, RarityProfile, Colors } from "./types";
+import { ScorpMetadata, RarityProfile, Colors, Attributes } from "./types";
 import colorNames from "./color-names";
 
 const metadata = require("./metadata.json");
 
-const scrops: ScorpMetadata = metadata.entries;
-const attributes: AttributeStats = metadata.attribute_stats;
+const scrops: { [id: string]: ScorpMetadata } = metadata.entries;
 const rareAttributes = require("./raretraits.json");
 
 export function getScorpMetadata(scorpId: string): ScorpMetadata {
@@ -14,40 +13,50 @@ export function getScorpMetadata(scorpId: string): ScorpMetadata {
 export function getRarity(scorpId: string): RarityProfile {
   const scorpAttributes = getScorpMetadata(scorpId).attributes;
 
-  let rarity = 0;
-  const rareTraits = {};
+  const rarityProfile: RarityProfile = {
+    rarity: 0,
+    rareTraits: {},
+  };
 
-  for (const att of Object.keys(scorpAttributes)) {
-    const attributeValueForScorp = scorpAttributes[att];
+  for (const att of Object.keys(scorpAttributes) as (keyof Attributes)[]) {
+    const attributeValueForScorp = scorpAttributes[att].toString();
     if (rareAttributes[att][attributeValueForScorp]) {
-      rarity += parseInt(
+      rarityProfile.rarity += parseInt(
         rareAttributes[att][attributeValueForScorp].rarity.substring(0, 1)
       );
-      rareTraits[att] = {
+      rarityProfile.rareTraits[att] = {
         [attributeValueForScorp]: rareAttributes[att][attributeValueForScorp],
       };
     }
   }
 
-  return {
-    rarity,
-    rareTraits,
-  };
+  return rarityProfile;
+}
+
+function getNiceColorName(hexCode: string): string {
+  let niceColor = colorNames.name(hexCode)[1].toString().toLowerCase();
+
+  if (niceColor.includes("invalid color: ")) {
+    niceColor = niceColor.substring(niceColor.indexOf("invalid color: "));
+  }
+  return niceColor;
 }
 
 export function getColors(scorpId: string): Colors {
-  const colors = getScorpMetadata(scorpId).colors;
-
-  for (const [location, color] of Object.entries(colors)) {
-    colors[location] = colorNames.name(color)[1];
-  }
-
-  return colors;
+  const mColors = getScorpMetadata(scorpId).colors;
+  return {
+    outline_color: getNiceColorName(mColors.outline_color),
+    body_color: getNiceColorName(mColors.body_color),
+    eye_color: getNiceColorName(mColors.eye_color),
+    bg_color: getNiceColorName(mColors.bg_color),
+    bg2_color: getNiceColorName(mColors.bg2_color),
+    secondary_color: getNiceColorName(mColors.secondary_color),
+  };
 }
 
 export function hasAttribute(
   scorpId: string,
-  attributeName: string,
+  attributeName: keyof Attributes,
   attributeValue: string | boolean
 ): boolean {
   const scorpMetadata = getScorpMetadata(scorpId).attributes;
@@ -75,4 +84,8 @@ export function isDruglord(scorpId: string): boolean {
     scorpMetadata.claw_right === "mushroom" &&
     scorpMetadata.tail === "syringe"
   );
+}
+
+export function isNatty(scorpId: string): boolean {
+  return getRarity(scorpId).rarity === 0;
 }

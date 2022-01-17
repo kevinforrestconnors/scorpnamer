@@ -52,9 +52,6 @@
   margin-bottom: 10px;
 }
 
-.content div {
-  margin: 10px 0;
-}
 .main-nav {
   grid-area: nav;
 }
@@ -81,7 +78,7 @@
 
 @media (min-width: 700px) {
   .grid-wrapper {
-    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-columns: 1fr 7fr 1fr;
     grid-template-areas:
       "header  header  header"
       "sidebar content a"
@@ -95,4 +92,43 @@
 
 .main-footer {
   font-size: 0.7em;
+}
+
+.explanatory-text {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.select-scorp_label {
+  margin-right: 5px;
+}
+
+.select-scorp_button {
+  margin-left: 5px;
+}
+
+.random-scorp-button {
+  margin-bottom: 25px;
+}
+
+.scorp-tools {
+  margin-top: 50px;
+}
+
+.color-info {
+  height: 60px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.color-info_textbox {
+  color: lightgrey;
+  padding-top: 9px;
+}
+
+.color-info_text {
+  width: 90%;
+  margin: 0 auto;
+  font-family: monospace;
+  font-size: 0.8em;
 }

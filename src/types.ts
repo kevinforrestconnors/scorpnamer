@@ -13,6 +13,18 @@ export type MultiColorType = "none" | "stripes" | "solid";
 export type FalseFace = "none" | "tepid" | "frown" | "smile";
 export type EvilEye = "evil_eye" | "none" | "blue" | "red";
 
+export type AllAttributeValues =
+  | OutlineType
+  | BackgroundStyle
+  | Claw
+  | Legs
+  | Tail
+  | MultiColorType
+  | FalseFace
+  | EvilEye;
+
+export type AllAttributeNames = keyof Attributes;
+
 export type Attributes = {
   outline_type: OutlineType;
   bg_style: BackgroundStyle;
@@ -43,25 +55,25 @@ export type AttributeData = {
 type StringBool = "true" | "false";
 
 export type AttributeStats = {
-  outline_type: { [key in OutlineType]: AttributeData };
-  bg_style: { [key in BackgroundStyle]: AttributeData };
-  claw_left: { [key in Claw]: AttributeData };
-  claw_right: { [key in Claw]: AttributeData };
-  has_cigarette: { [key in StringBool]: AttributeData };
-  legs: { [key in Legs]: AttributeData };
-  tail: { [key in Tail]: AttributeData };
-  bloody_tail: { [key in StringBool]: AttributeData };
-  has_matches: { [key in StringBool]: AttributeData };
-  has_halo: { [key in StringBool]: AttributeData };
-  multicolored: { [key in StringBool]: AttributeData };
-  colored_claws: { [key in StringBool]: AttributeData };
-  colored_core: { [key in StringBool]: AttributeData };
-  colored_tail: { [key in StringBool]: AttributeData };
-  multicolor_type: { [key in MultiColorType]: AttributeData };
-  false_face: { [key in FalseFace]: AttributeData };
-  evil_eye: { [key in EvilEye]: AttributeData };
-  no_eyes: { [key in StringBool]: AttributeData };
-  claws_unique: { [key in StringBool]: AttributeData };
+  outline_type: Partial<{ [key in OutlineType]: AttributeData }>;
+  bg_style: Partial<{ [key in BackgroundStyle]: AttributeData }>;
+  claw_left: Partial<{ [key in Claw]: AttributeData }>;
+  claw_right: Partial<{ [key in Claw]: AttributeData }>;
+  has_cigarette: Partial<{ [key in StringBool]: AttributeData }>;
+  legs: Partial<{ [key in Legs]: AttributeData }>;
+  tail: Partial<{ [key in Tail]: AttributeData }>;
+  bloody_tail: Partial<{ [key in StringBool]: AttributeData }>;
+  has_matches: Partial<{ [key in StringBool]: AttributeData }>;
+  has_halo: Partial<{ [key in StringBool]: AttributeData }>;
+  multicolored: Partial<{ [key in StringBool]: AttributeData }>;
+  colored_claws: Partial<{ [key in StringBool]: AttributeData }>;
+  colored_core: Partial<{ [key in StringBool]: AttributeData }>;
+  colored_tail: Partial<{ [key in StringBool]: AttributeData }>;
+  multicolor_type: Partial<{ [key in MultiColorType]: AttributeData }>;
+  false_face: Partial<{ [key in FalseFace]: AttributeData }>;
+  evil_eye: Partial<{ [key in EvilEye]: AttributeData }>;
+  no_eyes: Partial<{ [key in StringBool]: AttributeData }>;
+  claws_unique: Partial<{ [key in StringBool]: AttributeData }>;
 };
 
 export type RarityProfile = {
