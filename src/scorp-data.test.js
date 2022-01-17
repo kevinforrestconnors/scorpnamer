@@ -2,6 +2,7 @@ import {
   getScorpMetadata,
   getRarity,
   getColors,
+  getColors2,
   hasAttribute,
   isMono,
   isBaller,
@@ -101,6 +102,88 @@ test("Can name scorp colors", () => {
 
   // When
   const result = getColors(scorpId);
+
+  // Then
+  expect(result).toEqual(expectedOutput);
+});
+
+test("Can name scorp colors with a different library", () => {
+  // Given
+  const scorpId = "0056";
+  const expectedOutput = new Set([
+    "yellow",
+    "gold",
+    "laser lemon",
+    "unmellow yellow",
+    "golden fizz",
+    "starship",
+    "gorse",
+    "broom",
+    "lemon",
+    "turbo",
+    "canary",
+    "pear",
+    "barberry",
+    "bitter lemon",
+    "sunflower",
+    "chartreuse yellow",
+    "las palmas",
+    "ripe lemon",
+    "candy corn",
+    "bird flower",
+    "fuego",
+    "golden dream",
+    "candlelight",
+    "rio grande",
+    "paris daisy",
+    "wattle",
+    "school bus yellow",
+    "key lime pie",
+    "portica",
+    "electric lime",
+    "inch worm",
+    "la rioja",
+    "festival",
+  ]);
+
+  // When
+  const result = getColors2(scorpId, 25);
+
+  // Then
+  expect(result).toEqual(expectedOutput);
+});
+
+test("Can name scorp colors2 with different distance", () => {
+  // Given
+  const scorpId = "0056";
+  const expectedOutput = new Set([
+    "barberry",
+    "bird flower",
+    "bitter lemon",
+    "broom",
+    "canary",
+    "candlelight",
+    "candy corn",
+    "chartreuse yellow",
+    "fuego",
+    "golden dream",
+    "golden fizz",
+    "gorse",
+    "las palmas",
+    "laser lemon",
+    "lemon",
+    "pear",
+    "rio grande",
+    "ripe lemon",
+    "starship",
+    "sunflower",
+    "turbo",
+    "unmellow yellow",
+    "yellow",
+  ]);
+
+  // When
+  const result = getColors2(scorpId, 20);
 
   // Then
   expect(result).toEqual(expectedOutput);

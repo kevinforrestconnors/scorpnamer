@@ -1,5 +1,6 @@
 import {
   getColors,
+  getColors2,
   hasAttribute,
   isMono,
   isBaller,
@@ -261,6 +262,8 @@ const staticNames = {
     "roll",
     "puff",
     "hit",
+    "pyro",
+    "burno",
   ],
   halo: [
     "divine",
@@ -284,6 +287,9 @@ const staticNames = {
     "bag",
     "round",
     "circle",
+    "maraca",
+    "maracas",
+    "16",
   ],
   druglords: [
     "dealer",
@@ -302,8 +308,34 @@ const staticNames = {
     "crazy",
     "bender",
     "intoxicated",
+    "detox",
+    "toxic",
+    "euphoric",
+    "whippet",
+    "acid",
   ],
-  monos: ["solo", "mono", "boring", "simple", "stylish", "plain", "muted"],
+  monos: [
+    "color",
+    "palette",
+    "monochrome",
+    "el monocromo",
+    "paint",
+    "pigment",
+    "pig",
+    "artist",
+    "focused",
+    "solo",
+    "mono",
+    "boring",
+    "simple",
+    "stylish",
+    "plain",
+    "muted",
+    "embossed",
+    "boss",
+    "stamp",
+    "49",
+  ],
   striped: ["stripe", "stripey", "zebra", "bee", "rib"],
   claws_unique: [
     "unbalanced",
@@ -367,6 +399,7 @@ const staticNames = {
     "baby bell",
     "fairy",
     "champignon",
+    "musho",
   ],
   edwards: [
     "choppy",
@@ -381,6 +414,7 @@ const staticNames = {
     "scissors",
     "edward",
     "scissorhands",
+    "chip chop",
   ],
   evil_eyes: [
     "crossed",
@@ -436,6 +470,9 @@ const staticNames = {
     "monk",
     "window",
   ],
+  syringe_tails: ["pokey", "poke"],
+  fat_tails: ["dino", "fatty", "biggie", "big butt"],
+  ball_tails: ["ball and chain", "smallball", "chomp chomp"],
   missing_tails: [
     "tail",
     "no",
@@ -445,19 +482,41 @@ const staticNames = {
     "tailbone",
     "missing",
   ],
+  stubby_legs: ["stubby", "slow", "stump", "amputee", "dwarf"],
+  insect_legs: [
+    "insect",
+    "buzz",
+    "fly",
+    "mosquito",
+    "bzz",
+    "bee",
+    "cricket",
+    "roach",
+    "bug",
+    "bugged",
+    "art",
+    "ant",
+    "louse",
+    "lice",
+  ],
+  skinny_legs: ["svelte", "skinny", "petite", "lil'"],
+  fat_legs: [
+    "fatty",
+    "never skips leg day",
+    "leg day",
+    "squatter",
+    "slowpoke",
+    "hard to knock over",
+    "stomp",
+    "stompy",
+  ],
 };
 
-const prefixes = (scorpId: string): string[] => {
+const getAffixes = (scorpId: string): string[] => {
   let names: string[] = [];
 
-  // Color names from getColors
-  Object.values(getColors(scorpId)).forEach((color) => {
-    if (color.includes(" ")) {
-      names.push(color.split(" ")[0]);
-      names.push(color.split(" ")[1]);
-      names.push(color.split(" ")[0]);
-      names.push(color.split(" ")[1]);
-    }
+  getColors2(scorpId, 15).forEach((color) => {
+    names.push(color);
   });
 
   if (
@@ -520,9 +579,7 @@ const prefixes = (scorpId: string): string[] => {
   ) {
     names = names.concat(staticNames.evil_eyes);
   }
-  if (hasAttribute(scorpId, "bloody_tail", true)) {
-    names = names.concat(staticNames.bloody_tails);
-  }
+
   if (hasAttribute(scorpId, "outline_type", "white")) {
     names = names.concat(staticNames.white_outlines);
   }
@@ -532,6 +589,66 @@ const prefixes = (scorpId: string): string[] => {
   if (hasAttribute(scorpId, "tail", "missing")) {
     names = names.concat(staticNames.missing_tails);
   }
+  if (hasAttribute(scorpId, "tail", "syringe")) {
+    names = names.concat(staticNames.syringe_tails);
+  }
+  if (hasAttribute(scorpId, "tail", "fat")) {
+    names = names.concat(staticNames.fat_tails);
+  }
+  if (hasAttribute(scorpId, "tail", "ball")) {
+    names = names.concat(staticNames.ball_tails);
+  }
+  if (hasAttribute(scorpId, "bloody_tail", true)) {
+    names = names.concat(staticNames.bloody_tails);
+  }
+  if (hasAttribute(scorpId, "legs", "stubby")) {
+    names = names.concat(staticNames.stubby_legs);
+  }
+  if (hasAttribute(scorpId, "legs", "skinny")) {
+    names = names.concat(staticNames.skinny_legs);
+  }
+  if (hasAttribute(scorpId, "legs", "insect")) {
+    names = names.concat(staticNames.insect_legs);
+  }
+  if (hasAttribute(scorpId, "legs", "fat")) {
+    names = names.concat(staticNames.fat_legs);
+  }
+
+  return names;
+};
+
+const prefixes = (scorpId: string): string[] => {
+  let names = getAffixes(scorpId);
+
+  // Color names from getColors
+  Object.values(getColors(scorpId)).forEach((color) => {
+    if (color.includes(" ")) {
+      names.push(color.split(" ")[0]);
+      names.push(color.split(" ")[0]);
+      names.push(color.split(" ")[0]);
+      names.push(color.split(" ")[1]);
+    } else {
+      names.push(color);
+    }
+  });
+
+  return names;
+};
+
+const suffixes = (scorpId: string): string[] => {
+  let names = getAffixes(scorpId);
+
+  // Color names from getColors
+  Object.values(getColors(scorpId)).forEach((color) => {
+    if (color.includes(" ")) {
+      names.push(color.split(" ")[1]);
+      names.push(color.split(" ")[1]);
+      names.push(color.split(" ")[1]);
+      names.push(color.split(" ")[0]);
+    } else {
+      names.push(color);
+    }
+  });
 
   return names;
 };
@@ -546,101 +663,20 @@ const mains = (scorpId: string): string[] => {
     }
   });
 
+  // Color names from getColors2
+  getColors2(scorpId, 30).forEach((color) => {
+    names.push(color);
+  });
+
   return names.concat(staticNames.top100us).concat(staticNames.general);
 };
 
-const suffixes = (scorpId: string): string[] => {
-  let names: string[] = [];
-
-  // Color names from getColors
-  Object.values(getColors(scorpId)).forEach((color) => {
-    if (color.includes(" ")) {
-      names.push(color.split(" ")[0]);
-      names.push(color.split(" ")[1]);
-      names.push(color.split(" ")[0]);
-      names.push(color.split(" ")[1]);
-    }
-  });
-
-  if (
-    hasAttribute(scorpId, "has_cigarette", true) ||
-    hasAttribute(scorpId, "has_matches", true)
-  ) {
-    names = names.concat(staticNames.smokers);
-  }
-  if (hasAttribute(scorpId, "has_halo", true)) {
-    names = names.concat(staticNames.halo);
-  }
-  if (isBaller(scorpId)) {
-    names = names.concat(staticNames.ballers);
-  }
-  if (isDruglord(scorpId)) {
-    names = names.concat(staticNames.druglords);
-  }
-  if (isMono(scorpId)) {
-    names = names.concat(staticNames.monos);
-  }
-  if (hasAttribute(scorpId, "multicolor_type", "stripes")) {
-    names = names.concat(staticNames.striped);
-  }
-  if (hasAttribute(scorpId, "claws_unique", true)) {
-    names = names.concat(staticNames.claws_unique);
-  }
-  if (
-    hasAttribute(scorpId, "claw_left", "big") ||
-    hasAttribute(scorpId, "claw_right", "big")
-  ) {
-    names = names.concat(staticNames.claw_big);
-  }
-  if (
-    hasAttribute(scorpId, "claw_left", "missing") ||
-    hasAttribute(scorpId, "claw_right", "missing")
-  ) {
-    names = names.concat(staticNames.claw_missing);
-  }
-  if (
-    hasAttribute(scorpId, "claw_left", "ball") ||
-    hasAttribute(scorpId, "claw_right", "ball")
-  ) {
-    names = names.concat(staticNames.boxers);
-  }
-  if (
-    hasAttribute(scorpId, "claw_left", "mushroom") ||
-    hasAttribute(scorpId, "claw_right", "mushroom")
-  ) {
-    names = names.concat(staticNames.mushies);
-  }
-  if (
-    hasAttribute(scorpId, "claw_left", "scissors") ||
-    hasAttribute(scorpId, "claw_right", "scissors")
-  ) {
-    names = names.concat(staticNames.edwards);
-  }
-  if (
-    hasAttribute(scorpId, "evil_eye", "blue") ||
-    hasAttribute(scorpId, "evil_eye", "red")
-  ) {
-    names = names.concat(staticNames.evil_eyes);
-  }
-  if (hasAttribute(scorpId, "bloody_tail", true)) {
-    names = names.concat(staticNames.bloody_tails);
-  }
-  if (hasAttribute(scorpId, "outline_type", "white")) {
-    names = names.concat(staticNames.white_outlines);
-  }
-  if (hasAttribute(scorpId, "no_eyes", true)) {
-    names = names.concat(staticNames.white_outlines);
-  }
-  if (hasAttribute(scorpId, "tail", "missing")) {
-    names = names.concat(staticNames.missing_tails);
-  }
-
-  return names;
-};
-
 export function generateName(scorpId: string): string {
-  const numPrefixes = chance.integer({ min: 0, max: 2 });
-  const numSuffixes = chance.integer({ min: 0, max: 1 });
+  const prefixRoll = Math.random(); // > 0.9 = 2 prefix, > 0.3 = 1 prefix, < 0.3 = 0 prefix
+  const suffixRoll = Math.random(); // > 0.9 = 2 suffix, > 0.3 = 1 suffix, < 0.3 = 0 suffix
+
+  const numPrefixes = prefixRoll > 0.9 ? 2 : prefixRoll > 0.3 ? 1 : 0;
+  const numSuffixes = suffixRoll > 0.9 ? 2 : suffixRoll > 0.3 ? 1 : 0;
 
   const p1Opts = prefixes(scorpId);
   const p2Opts = mains(scorpId);
@@ -668,5 +704,7 @@ export function generateName(scorpId: string): string {
     result = result + chance.pickone(staticNames.supraSuffixes);
   }
 
-  return result.trim().toLowerCase();
+  result = result.trim().toLowerCase();
+
+  return result.length > 64 ? generateName(scorpId) : result;
 }

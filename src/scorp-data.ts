@@ -1,5 +1,6 @@
 import { ScorpMetadata, RarityProfile, Colors, Attributes } from "./types";
 import colorNames from "./color-names";
+import colorNamer from "color-namer";
 
 const metadata = require("./metadata.json");
 
@@ -52,6 +53,38 @@ export function getColors(scorpId: string): Colors {
     bg2_color: getNiceColorName(mColors.bg2_color),
     secondary_color: getNiceColorName(mColors.secondary_color),
   };
+}
+
+export function getColors2(scorpId: string, distance: number): Set<string> {
+  const mColors = getScorpMetadata(scorpId).colors;
+  const namers: ColorNamer[] = Object.values({
+    body_color: mColors.body_color,
+    bg_color: mColors.body_color,
+  }).map(colorNamer);
+  const colors: Set<string> = new Set();
+
+  namers.forEach((names: ColorNamer) => {
+    names.roygbiv.forEach((n) => {
+      if (n.distance < distance) colors.add(n.name.toLowerCase());
+    });
+    names.basic.forEach((n) => {
+      if (n.distance < distance) colors.add(n.name.toLowerCase());
+    });
+    names.html.forEach((n) => {
+      if (n.distance < distance) colors.add(n.name.toLowerCase());
+    });
+    names.x11.forEach((n) => {
+      if (n.distance < distance) colors.add(n.name.toLowerCase());
+    });
+    names.pantone.forEach((n) => {
+      if (n.distance < distance) colors.add(n.name.toLowerCase());
+    });
+    names.ntc.forEach((n) => {
+      if (n.distance < distance) colors.add(n.name.toLowerCase());
+    });
+  });
+
+  return colors;
 }
 
 export function hasAttribute(
