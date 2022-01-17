@@ -139,7 +139,7 @@ class App extends React.Component {
                     <a
                       href={`https://radstrike.com/scorpions/info/?number=${this.state.scorpId}`}
                       target="_blank"
-                      rel="noreffer"
+                      rel="noreferrer"
                     >
                       {
                         <img

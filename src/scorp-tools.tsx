@@ -41,7 +41,7 @@ export const ColorDistribution: React.ReactElement = (function () {
   ids.forEach((scorpId: string) => {
     const colors = getScorpMetadata(scorpId).colors;
 
-    for (const [_, value] of Object.entries(colors)) {
+    for (const value of Object.values(colors)) {
       if (!COLOR_DISTRIBUTION[value]) {
         COLOR_DISTRIBUTION[value] = {
           occurrences: 0,
