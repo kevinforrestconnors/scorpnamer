@@ -1,9 +1,7 @@
-import { ScorpMetadata, RarityProfile, Colors, Attributes } from "./types";
-import colorNames from "./color-names";
+import { ScorpMetadata, RarityProfile, Attributes } from "./types";
 import colorNamer from "color-namer";
 
 const metadata = require("./metadata.json");
-
 const scrops: { [id: string]: ScorpMetadata } = metadata.entries;
 const rareAttributes = require("./raretraits.json");
 
@@ -34,28 +32,55 @@ export function getRarity(scorpId: string): RarityProfile {
   return rarityProfile;
 }
 
-function getNiceColorName(hexCode: string): string {
-  let niceColor = colorNames.name(hexCode)[1].toString().toLowerCase();
+export function prettyFormatColor(color: string): string {
+  let prettyColor = color.toLowerCase();
 
-  if (niceColor.includes("invalid color: ")) {
-    niceColor = niceColor.substring(niceColor.indexOf("invalid color: "));
+  // allow single word boring colors
+  if (!prettyColor.includes(" ")) {
+    return prettyColor;
   }
-  return niceColor;
+
+  // exceptions
+  if (prettyColor === "unmellow yellow") {
+    return prettyColor;
+  }
+
+  const COLOR_NAMES_TO_IGNORE = [
+    "black",
+    "blue",
+    "cyan",
+    "green",
+    "teal",
+    "turquoise",
+    "indigo",
+    "gray",
+    "purple",
+    "brown",
+    "tan",
+    "violet",
+    "beige",
+    "fuchsia",
+    "gold",
+    "magenta",
+    "orange",
+    "pink",
+    "red",
+    "white",
+    "yellow",
+  ];
+  var expStr = COLOR_NAMES_TO_IGNORE.join("|");
+  prettyColor = prettyColor
+    .replace(new RegExp("\\b(" + expStr + ")\\b", "gi"), " ")
+    .replace(/\s{2,}/g, " ");
+
+  while (prettyColor.includes("  ")) {
+    prettyColor = prettyColor.replace("  ", " ");
+  }
+
+  return prettyColor.trim();
 }
 
-export function getColors(scorpId: string): Colors {
-  const mColors = getScorpMetadata(scorpId).colors;
-  return {
-    outline_color: getNiceColorName(mColors.outline_color),
-    body_color: getNiceColorName(mColors.body_color),
-    eye_color: getNiceColorName(mColors.eye_color),
-    bg_color: getNiceColorName(mColors.bg_color),
-    bg2_color: getNiceColorName(mColors.bg2_color),
-    secondary_color: getNiceColorName(mColors.secondary_color),
-  };
-}
-
-export function getColors2(scorpId: string, distance: number): Set<string> {
+export function getColors(scorpId: string, distance: number): Set<string> {
   const mColors = getScorpMetadata(scorpId).colors;
   const namers: ColorNamer[] = Object.values({
     body_color: mColors.body_color,
@@ -65,22 +90,16 @@ export function getColors2(scorpId: string, distance: number): Set<string> {
 
   namers.forEach((names: ColorNamer) => {
     names.roygbiv.forEach((n) => {
-      if (n.distance < distance) colors.add(n.name.toLowerCase());
+      if (n.distance < distance) colors.add(prettyFormatColor(n.name));
     });
     names.basic.forEach((n) => {
-      if (n.distance < distance) colors.add(n.name.toLowerCase());
-    });
-    names.html.forEach((n) => {
-      if (n.distance < distance) colors.add(n.name.toLowerCase());
-    });
-    names.x11.forEach((n) => {
-      if (n.distance < distance) colors.add(n.name.toLowerCase());
+      if (n.distance < distance) colors.add(prettyFormatColor(n.name));
     });
     names.pantone.forEach((n) => {
-      if (n.distance < distance) colors.add(n.name.toLowerCase());
+      if (n.distance < distance) colors.add(prettyFormatColor(n.name));
     });
     names.ntc.forEach((n) => {
-      if (n.distance < distance) colors.add(n.name.toLowerCase());
+      if (n.distance < distance) colors.add(prettyFormatColor(n.name));
     });
   });
 
@@ -97,7 +116,7 @@ export function hasAttribute(
 }
 
 export function isMono(scorpId: string): boolean {
-  const colors = getColors(scorpId);
+  const colors = getScorpMetadata(scorpId).colors;
   return colors.body_color === colors.bg2_color;
 }
 

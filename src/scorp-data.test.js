@@ -2,7 +2,6 @@ import {
   getScorpMetadata,
   getRarity,
   getColors,
-  getColors2,
   hasAttribute,
   isMono,
   isBaller,
@@ -90,25 +89,6 @@ test("Can compute scorp rarity", () => {
 
 test("Can name scorp colors", () => {
   // Given
-  const scorpId = "1136";
-  const expectedOutput = {
-    outline_color: "black",
-    body_color: "spring green",
-    eye_color: "spring green",
-    bg_color: "blue",
-    bg2_color: "jungle green",
-    secondary_color: "pale canary",
-  };
-
-  // When
-  const result = getColors(scorpId);
-
-  // Then
-  expect(result).toEqual(expectedOutput);
-});
-
-test("Can name scorp colors with a different library", () => {
-  // Given
   const scorpId = "0056";
   const expectedOutput = new Set([
     "yellow",
@@ -126,7 +106,7 @@ test("Can name scorp colors with a different library", () => {
     "barberry",
     "bitter lemon",
     "sunflower",
-    "chartreuse yellow",
+    "chartreuse",
     "las palmas",
     "ripe lemon",
     "candy corn",
@@ -137,7 +117,7 @@ test("Can name scorp colors with a different library", () => {
     "rio grande",
     "paris daisy",
     "wattle",
-    "school bus yellow",
+    "school bus",
     "key lime pie",
     "portica",
     "electric lime",
@@ -147,13 +127,13 @@ test("Can name scorp colors with a different library", () => {
   ]);
 
   // When
-  const result = getColors2(scorpId, 25);
+  const result = getColors(scorpId, 25);
 
   // Then
   expect(result).toEqual(expectedOutput);
 });
 
-test("Can name scorp colors2 with different distance", () => {
+test("Can name scorp colors with different distance", () => {
   // Given
   const scorpId = "0056";
   const expectedOutput = new Set([
@@ -164,7 +144,7 @@ test("Can name scorp colors2 with different distance", () => {
     "canary",
     "candlelight",
     "candy corn",
-    "chartreuse yellow",
+    "chartreuse",
     "fuego",
     "golden dream",
     "golden fizz",
@@ -183,7 +163,7 @@ test("Can name scorp colors2 with different distance", () => {
   ]);
 
   // When
-  const result = getColors2(scorpId, 20);
+  const result = getColors(scorpId, 20);
 
   // Then
   expect(result).toEqual(expectedOutput);

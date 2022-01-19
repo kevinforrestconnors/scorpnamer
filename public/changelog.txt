@@ -1,14 +1,30 @@
 January 17, 2021
 ====
+Bugfixes
+  - Fixed a bug where "isMono" was comparing color names (which can collide if hex code is not an exact match) instead of hex codes.
 Major
   - Added a second color naming library with better color names.  This should particulary improve the mono scorpion naming experience.
   - Added name lists for: [syringe_tails, fat_tails, ball_tails, stubby_legs, skinny_legs, insect_legs, fat_legs]
   - Added some longer names and if the name generator creates a name > 64 characters, it will reroll the name (you will notice no difference, but 64 characters is the max for official names through transactions, so didn't want to give a name that can't be used.)
   - Adjusted rarity so that 2 prefix / 2 suffix is more rare (was 33.3%/33.3%/33.3% 0/1/2 affixes, now 30%/60%/10% 0/1/2 affixes)
 Minor
-  - Added [pyro, burno] to "smokers" name list
-  - Added [maraca, maracas, 16] to "ballers" name list
-  - Added [detox, toxic, euphoric, whippet, acid] to "druglords" name list
-  - Added [musho] to the "mushrooms" name list
-  - Added [chip chop] to the "edwards" name list
-  - Added [embossed, boss, stamp, color, pigment, pig, palette, monochrome, el monocromo, paint, artist, focused, 49] to the "monos" name list
+  - Added more names to the "smokers" name list 
+  - Added more names to the "ballers" name list
+  - Added more names to the "druglords" name list
+  - Added more names to the "mushrooms" name list
+  - Added more names to the "edwards" name list
+  - Added more names to the "monos" name list
+
+January 18, 2021
+====
+Major
+  - Clicking color distribution colors now opens a pane that shows all scorpions with that color
+  - Colors with names like "sea green" or "seagreen" are now converted to e.g. "sea" by stripping away the names:
+    > [black, blue, cyan, green, teal, turquoise, indigo, gray, purple, brown, tan, violet, beige, fuchsia, gold, magenta, orange, pink, red, white, yellow]
+  - Removed ntc library since color-namer already uses it.
+  - Lots of misc. style changes
+Minor
+  - Added a small list of German names
+  - Added 693 names from https://babynames.com/names/popular/around-the-world.php
+  - Suffixes now have a 30% chance to be changed to "the {suffix}", but only for one of the suffixes
+  - Added a few more names to some categories

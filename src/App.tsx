@@ -4,6 +4,8 @@ import { generateName } from "./scrop-names";
 import { ColorDistribution } from "./scorp-tools";
 import Chance from "chance";
 import Helmet from "react-helmet";
+import { ScorpPhoto } from "./ScorpPhoto";
+import { scropEasterEgg } from "./util/index";
 
 const chance = new Chance();
 
@@ -68,11 +70,11 @@ class App extends React.Component {
         <div className="App">
           <div className="grid-wrapper">
             <header className="main-head">
-              <h1>Abandoned Scorpions Name Generator</h1>
+              <h1>Abandoned {scropEasterEgg("Scorpion")}s Name Generator</h1>
             </header>
             <aside className="side"></aside>
             <article className="content">
-              <h2>Welcome to ScropNamer.</h2>
+              <h2>Welcome to {scropEasterEgg("Scorp")}Namer.</h2>
               <div className="select-scorp">
                 <div>
                   <span className="select-scorp_label">
@@ -117,7 +119,7 @@ class App extends React.Component {
                       this.loadImage(scorpId);
                     }}
                   >
-                    select a random scorpion
+                    select a random {scropEasterEgg("scorpion")}
                   </button>
                 </div>
               </div>
@@ -132,42 +134,44 @@ class App extends React.Component {
                   generate a name
                 </button>
                 <div>
-                  <div className="scorpName">
+                  <div className="scorp-name">
                     <b>{this.state.scorpId}</b>: <i>{this.state.name}</i>
                   </div>
-                  <div className="scorpPhoto">
-                    <a
-                      href={`https://radstrike.com/scorpions/info/?number=${this.state.scorpId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {
-                        <img
-                          src={this.state.image}
-                          alt={`Scorp ${this.state.scorpId}`}
-                        />
-                      }
-                    </a>
-                  </div>
+                  <ScorpPhoto
+                    scorpId={this.state.scorpId}
+                    image={this.state.image}
+                  ></ScorpPhoto>
                   <div className="scorpTrivia"></div>
                 </div>
               </div>
               <div className="scorp-tools">
-                <h2>Scorp Tools</h2>
+                <h2>{scropEasterEgg("Scorp")} Tools</h2>
                 <h3>Color Distribution</h3>
-                <div className="scorp-tool-1">{ColorDistribution}</div>
+                <div className="scorp-tool-1">
+                  {<ColorDistribution></ColorDistribution>}
+                </div>
               </div>
             </article>
             <footer className="main-footer">
               <div>
-                This app is not officially related to the Abandoned Scorpions
-                project. I am an independent developer.
+                {" "}
+                <div>
+                  This app is not officially related to the Abandoned
+                  {scropEasterEgg("Scorpion")}s project. I am an independent
+                  developer.
+                </div>
+                <div>
+                  To get in touch, send a transaction with a message to:
+                </div>
+                <i>
+                  rdx1qspyk7g34cazdeyzxzdldrd6506gulpwusum00mvqpytfvmwgz4c8pqe8l7e0
+                </i>
               </div>
-              <div>To get in touch, send a transaction with a message to:</div>
-
-              <i>
-                rdx1qspyk7g34cazdeyzxzdldrd6506gulpwusum00mvqpytfvmwgz4c8pqe8l7e0
-              </i>
+              <div>
+                <a href="/changelog.txt" target="_blank" rel="noreferrer">
+                  Last updated January 17, 2022
+                </a>
+              </div>
             </footer>
           </div>
         </div>

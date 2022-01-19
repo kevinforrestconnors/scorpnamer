@@ -1,3 +1,16 @@
+body {
+  background-color: #feeeed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: monospace;
+}
+
 .App {
   text-align: center;
 }
@@ -90,8 +103,45 @@
   }
 }
 
+.color-info_scorps-of-color-container {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+@media (max-width: 1200px) {
+  .color-info_scorps-of-color-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1100px) {
+  .color-info_scorps-of-color-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .color-info_scorps-of-color-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .color-info_scorps-of-color-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
 .main-footer {
   font-size: 0.7em;
+}
+
+.generate-name {
+  padding: 4px;
+}
+
+.scorp-name {
+  margin: 5px 0;
+  font-size: 1.25em;
 }
 
 .explanatory-text {
@@ -116,19 +166,68 @@
 }
 
 .color-info {
-  height: 60px;
+  display: block;
+  min-height: 60px;
   box-sizing: border-box;
   margin: 0;
+  cursor: all-scroll;
 }
 
 .color-info_textbox {
-  color: lightgrey;
   padding-top: 9px;
+}
+
+.color-info_textbox.light {
+  color: rgb(236, 236, 236);
+}
+.color-info_textbox.dark {
+  color: rgb(36, 36, 36);
 }
 
 .color-info_text {
   width: 90%;
   margin: 0 auto;
   font-family: monospace;
-  font-size: 0.8em;
+}
+
+.color-info_scorp-list {
+  display: none;
+}
+
+.color-info_show-hide-button {
+  display: none;
+}
+
+.color-info_show-hide-button:checked ~ div.color-info_scorp-list {
+  display: block;
+}
+
+.color-info_scorps-of-color-container {
+  display: grid;
+}
+
+.color-info_scorps-of-color-header {
+  margin-top: 10px;
+}
+
+.color-info_scorps-of-color-header.light {
+  color: rgb(236, 236, 236);
+}
+.color-info_scorps-of-color-header.dark {
+  color: rgb(36, 36, 36);
+}
+
+.color-info_scorps-of-color-container .color-info_scorps-of-color-element a {
+  font-family: monospace;
+}
+
+.color-info_scorps-of-color-container.light
+  .color-info_scorps-of-color-element
+  a {
+  color: rgb(236, 236, 236);
+}
+.color-info_scorps-of-color-container.dark
+  .color-info_scorps-of-color-element
+  a {
+  color: rgb(36, 36, 36);
 }
