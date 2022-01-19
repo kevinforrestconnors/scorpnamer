@@ -86,6 +86,7 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
               target="_blank"
               rel="noreferrer"
             >
+              <img src={`/img/${scorpId}.png`} />
               {scorpId}
             </a>
           </div>
