@@ -26,5 +26,7 @@ Major
 Minor
   - Added a small list of German names
   - Added 693 names from https://babynames.com/names/popular/around-the-world.php
-  - Suffixes now have a 30% chance to be changed to "the {suffix}", but only for one of the suffixes
+  - Suffixes now have a 15% chance to be changed to "the {suffix}", but only for one of the suffixes
   - Added a few more names to some categories
+Bugfix
+  - name could end in "the"

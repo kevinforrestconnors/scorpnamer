@@ -166,7 +166,9 @@ export function generateName(scorpId: string): string {
     lastPart += `${chance.pickone(p3Opts)} `;
   }
   lastPart = lastPart.trim();
-  lastPart = Math.random() > 0.85 ? `the ${lastPart}` : lastPart;
+  if (numSuffixes > 0) {
+    lastPart = Math.random() > 0.85 ? `the ${lastPart}` : lastPart;
+  }
 
   result = `${firstPart} ${middlePart} ${lastPart}`.trim();
 
