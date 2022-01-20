@@ -31,28 +31,32 @@ class App extends React.Component {
     const scorpId = rollScorp();
     this.state = {
       scorpId,
-      image: "",
+      image: `/img/${scorpId}_large.png`,
       faviconImage: "",
       formScorpId: "",
       name: generateName(scorpId),
     };
-    this.loadImage(scorpId);
   }
 
+  componentDidMount() {
+    this.loadNewScorp(this.state.scorpId);
+}
+
   handleSelectScorpChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ formScorpId: event.target.value });
+    if(event.target.value.toString().length === 4){
+      setTimeout(() => {
+        this.setState({ 
+          formScorpId: event.target.value,        
+        });
+      }, 0);
+    }
   };
 
-  loadImage = (imageName: string) => {
-    import(`../img/${imageName}_large.png`).then((image) => {
-      this.setState({
-        image: image.default,
-      });
-    });
-    import(`../img/${imageName}.png`).then((image) => {
-      this.setState({
-        faviconImage: image.default,
-      });
+  loadNewScorp = (scorpId: string) => {
+    this.setState({
+      formScorpId: scorpId,
+      image: `/img/${scorpId}_large.png`,
+      faviconImage: `/img/${scorpId}.png`,
     });
   };
 
@@ -83,11 +87,9 @@ class App extends React.Component {
                   <span>
                     <input
                       name="select-scorp-textbox"
-                      type="number"
+                      type="text"
                       placeholder="0000"
-                      min="0000"
-                      max="9999"
-                      value={this.state.formScorpId}
+                      maxLength={4}
                       onChange={this.handleSelectScorpChange}
                     ></input>
                   </span>
@@ -96,11 +98,7 @@ class App extends React.Component {
                       className="select-scorp_button"
                       onClick={() => {
                         if (this.state.formScorpId.length === 4) {
-                          this.setState({
-                            scorpId: `${this.state.formScorpId}`,
-                            image: this.loadImage(this.state.formScorpId),
-                            name: generateName(this.state.formScorpId),
-                          });
+                          this.loadNewScorp(this.state.formScorpId);
                         }
                       }}
                     >
@@ -113,10 +111,9 @@ class App extends React.Component {
                     onClick={() => {
                       const scorpId = rollScorp();
                       this.setState({
-                        scorpId: `${scorpId}`,
                         name: generateName(scorpId),
                       });
-                      this.loadImage(scorpId);
+                      this.loadNewScorp(scorpId);
                     }}
                   >
                     select a random {scropEasterEgg("scorpion")}

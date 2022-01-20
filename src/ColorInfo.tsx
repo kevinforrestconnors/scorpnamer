@@ -80,14 +80,12 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
     ][]) {
       for (const scorpId of scorpIds) {
         sections[colorLocation].push(
-          <div key={scorpId} className="color-info_scorps-of-color-element">
+          <div key={scorpId} className="color-info_scorps-of-color-element" style={{backgroundImage: `url(/img/${scorpId}_large.png)`}}>
             <a
               href={`https://radstrike.com/scorpions/info/?number=${scorpId}`}
               target="_blank"
               rel="noreferrer"
-            >
-              {scorpId}
-            </a>
+            ></a>
           </div>
         );
       }
