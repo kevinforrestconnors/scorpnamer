@@ -1,19 +1,8 @@
-January 17, 2021
+January 20, 2022
 ====
-Bugfixes
-  - Fixed a bug where "isMono" was comparing color names (which can collide if hex code is not an exact match) instead of hex codes.
 Major
-  - Added a second color naming library with better color names.  This should particulary improve the mono scorpion naming experience.
-  - Added name lists for: [syringe_tails, fat_tails, ball_tails, stubby_legs, skinny_legs, insect_legs, fat_legs]
-  - Added some longer names and if the name generator creates a name > 64 characters, it will reroll the name (you will notice no difference, but 64 characters is the max for official names through transactions, so didn't want to give a name that can't be used.)
-  - Adjusted rarity so that 2 prefix / 2 suffix is more rare (was 33.3%/33.3%/33.3% 0/1/2 affixes, now 30%/60%/10% 0/1/2 affixes)
-Minor
-  - Added more names to the "smokers" name list 
-  - Added more names to the "ballers" name list
-  - Added more names to the "druglords" name list
-  - Added more names to the "mushrooms" name list
-  - Added more names to the "edwards" name list
-  - Added more names to the "monos" name list
+  - Instead of ids, scorpions now are displayed in the Color Distribution tool
+
 
 January 18, 2021
 ====
@@ -30,3 +19,20 @@ Minor
   - Added a few more names to some categories
 Bugfix
   - name could end in "the"
+
+January 17, 2021
+====
+Bugfixes
+  - Fixed a bug where "isMono" was comparing color names (which can collide if hex code is not an exact match) instead of hex codes.
+Major
+  - Added a second color naming library with better color names.  This should particulary improve the mono scorpion naming experience.
+  - Added name lists for: [syringe_tails, fat_tails, ball_tails, stubby_legs, skinny_legs, insect_legs, fat_legs]
+  - Added some longer names and if the name generator creates a name > 64 characters, it will reroll the name (you will notice no difference, but 64 characters is the max for official names through transactions, so didn't want to give a name that can't be used.)
+  - Adjusted rarity so that 2 prefix / 2 suffix is more rare (was 33.3%/33.3%/33.3% 0/1/2 affixes, now 30%/60%/10% 0/1/2 affixes)
+Minor
+  - Added more names to the "smokers" name list 
+  - Added more names to the "ballers" name list
+  - Added more names to the "druglords" name list
+  - Added more names to the "mushrooms" name list
+  - Added more names to the "edwards" name list
+  - Added more names to the "monos" name list
