@@ -91,6 +91,7 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
 
         sections[colorLocation].push(
           <a
+            key={scorpId}
             href={`https://radstrike.com/scorpions/info/?number=${scorpId}`}
             target="_blank"
             rel="noreferrer"
