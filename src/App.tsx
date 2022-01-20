@@ -52,6 +52,10 @@ class App extends React.Component {
     }
   };
 
+  onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   loadNewScorp = (scorpId: string) => {
     this.setState({
       scorpId,
@@ -81,32 +85,34 @@ class App extends React.Component {
             <article className="content">
               <h2>Welcome to {scropEasterEgg("Scorp")}Namer.</h2>
               <div className="select-scorp">
-                <div>
-                  <span className="select-scorp_label">
-                    <label htmlFor="select-scorp-textbox">select by id:</label>
-                  </span>
-                  <span>
-                    <input
-                      name="select-scorp-textbox"
-                      type="text"
-                      placeholder="0000"
-                      maxLength={4}
-                      onChange={this.handleSelectScorpChange}
-                    ></input>
-                  </span>
-                  <span>
-                    <button
-                      className="select-scorp_button"
-                      onClick={() => {
-                        if (this.state.formScorpId.length === 4) {
-                          this.loadNewScorp(this.state.formScorpId);
-                        }
-                      }}
-                    >
-                      select
-                    </button>
-                  </span>
-                </div>
+                <form onSubmit={this.onFormSubmit}>
+                  <div>
+                    <span className="select-scorp_label">
+                      <label htmlFor="select-scorp-textbox">select by id:</label>
+                    </span>
+                    <span>
+                      <input
+                        name="select-scorp-textbox"
+                        type="text"
+                        placeholder="0000"
+                        maxLength={4}
+                        onChange={this.handleSelectScorpChange}
+                      ></input>
+                    </span>
+                    <span>
+                      <button
+                        className="select-scorp_button"
+                        onClick={() => {
+                          if (this.state.formScorpId.length === 4) {
+                            this.loadNewScorp(this.state.formScorpId);
+                          }
+                        }}
+                      >
+                        select
+                      </button>
+                    </span>
+                  </div>
+                </form>
                 <div className="random-scorp-button">
                   <button
                     onClick={() => {
