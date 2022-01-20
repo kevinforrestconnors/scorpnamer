@@ -103,7 +103,6 @@ h6 {
   }
 }
 
-
 .main-footer {
   font-size: 0.7em;
 }
@@ -175,7 +174,6 @@ h6 {
   display: block;
 }
 
-
 .color-info_scorps-of-color-header {
   margin: 10px 0;
 }
@@ -188,11 +186,11 @@ h6 {
 }
 
 .color-info_scorps-of-color-container {
-  display: grid;;
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
 
-.color-info_scorps-of-color-element{
+.color-info_scorps-of-color-element {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -200,7 +198,7 @@ h6 {
   position: relative;
 }
 
-.color-info_scorps-of-color-element a{ 
+.color-info_scorps-of-color-element a {
   position: absolute;
   top: 0;
   left: 0;
@@ -216,5 +214,12 @@ h6 {
 .color-info_scorps-of-color-container.dark
   .color-info_scorps-of-color-element
   a {
+  color: rgb(36, 36, 36);
+}
+
+div.light {
+  color: rgb(236, 236, 236);
+}
+div.dark {
   color: rgb(36, 36, 36);
 }

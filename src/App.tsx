@@ -54,6 +54,7 @@ class App extends React.Component {
 
   loadNewScorp = (scorpId: string) => {
     this.setState({
+      scorpId,
       formScorpId: scorpId,
       image: `/img/${scorpId}_large.png`,
       faviconImage: `/img/${scorpId}.png`,
@@ -111,6 +112,7 @@ class App extends React.Component {
                     onClick={() => {
                       const scorpId = rollScorp();
                       this.setState({
+                        scorpId,
                         name: generateName(scorpId),
                       });
                       this.loadNewScorp(scorpId);

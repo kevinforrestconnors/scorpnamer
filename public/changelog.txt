@@ -2,6 +2,10 @@ January 20, 2022
 ====
 Major
   - Instead of ids, scorpions now are displayed in the Color Distribution tool
+  - Filters out secondary color scorpions without multicolor type = true from color distribution
+Bugfixes
+  - Fixed a bug where if there were no options for chance.pickone the app would freeze
+  - Fixed a bug where the id was not updating
 
 
 January 18, 2021
