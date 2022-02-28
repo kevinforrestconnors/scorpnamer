@@ -1,4 +1,4 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 import "./App.css";
 import { generateName } from "./scrop-names";
 import { ColorDistribution } from "./scorp-tools";
@@ -6,6 +6,7 @@ import Chance from "chance";
 import Helmet from "react-helmet";
 import { ScorpPhoto } from "./ScorpPhoto";
 import { scropEasterEgg } from "./util/index";
+import { MANUAL_TAGGED_COLORS } from "./constants";
 
 const chance = new Chance();
 
@@ -24,6 +25,7 @@ class App extends React.Component {
     faviconImage: string;
     formScorpId: string;
     name: string;
+    colorFilters: { [color: string]: boolean };
   };
 
   constructor(props: any) {
@@ -35,6 +37,18 @@ class App extends React.Component {
       faviconImage: "",
       formScorpId: "",
       name: generateName(scorpId),
+      colorFilters: [...MANUAL_TAGGED_COLORS, "all"].reduce(
+        (obj: { [color: string]: boolean }, color: string) => {
+          if (color === "red") {
+            obj[color] = true; //  default red
+            return obj;
+          }
+
+          obj[color] = false;
+          return obj;
+        },
+        {}
+      ),
     };
   }
 
@@ -59,6 +73,48 @@ class App extends React.Component {
       image: `/img/${scorpId}_large.png`,
       faviconImage: `/img/${scorpId}.png`,
     });
+  };
+
+  ColorFilters = () => {
+    let filterList: React.ReactFragment[] = [];
+    [...MANUAL_TAGGED_COLORS, "all"].forEach((color: string) => {
+      filterList.push(
+        <span style={{ marginRight: "15px" }}>
+          <label htmlFor={`color-filter-${color}`}>{color}</label>
+          <input
+            id={`color-filter-${color}`}
+            type="checkbox"
+            checked={this.state.colorFilters[color]}
+            onClick={() => {
+              if (color === "all" && this.state.colorFilters["all"] === false) {
+                const restoreDefaults = [...MANUAL_TAGGED_COLORS].reduce(
+                  (obj: { [color: string]: boolean }, color: string) => {
+                    obj[color] = false;
+                    return obj;
+                  },
+                  {}
+                );
+
+                this.setState({
+                  colorFilters: {
+                    all: true,
+                    ...restoreDefaults,
+                  },
+                });
+              } else {
+                this.setState({
+                  colorFilters: {
+                    ...this.state.colorFilters,
+                    [color]: !this.state.colorFilters[color],
+                  },
+                });
+              }
+            }}
+          ></input>
+        </span>
+      );
+    });
+    return filterList;
   };
 
   render() {
@@ -145,9 +201,54 @@ class App extends React.Component {
               </div>
               <div className="scorp-tools">
                 <h2>{scropEasterEgg("Scorp")} Tools</h2>
-                <h3>Color Distribution</h3>
-                <div className="scorp-tool-1">
-                  {<ColorDistribution></ColorDistribution>}
+                <div className="color-distribution-tool">
+                  <button
+                    className="scroll-to-top"
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    scroll to top
+                  </button>
+                  <button
+                    className="expand-all"
+                    onClick={() => {
+                      const checkboxes = document.getElementsByClassName(
+                        "color-info_show-hide-button"
+                      ) as HTMLCollectionOf<HTMLInputElement>;
+                      for (let i = 0; i < checkboxes.length; i++) {
+                        checkboxes[i].checked = true; // eslint-ignore-line
+                      }
+                    }}
+                  >
+                    expand all
+                  </button>
+                  <button
+                    className="collapse-all"
+                    onClick={() => {
+                      const checkboxes = document.getElementsByClassName(
+                        "color-info_show-hide-button"
+                      ) as HTMLCollectionOf<HTMLInputElement>;
+                      for (let i = 0; i < checkboxes.length; i++) {
+                        checkboxes[i].checked = false; // eslint-ignore-line
+                      }
+                    }}
+                  >
+                    collapse all
+                  </button>
+
+                  <h3>Color Distribution</h3>
+                  <div className="color-distribution-filters">
+                    <div style={{ fontWeight: "bold" }}>Filter by color:</div>
+                    {this.ColorFilters()}
+                  </div>
+                  <div className="scorp-tool-1">
+                    {
+                      <ColorDistribution
+                        colorFilters={this.state.colorFilters}
+                      ></ColorDistribution>
+                    }
+                  </div>
                 </div>
               </div>
             </article>
@@ -168,7 +269,7 @@ class App extends React.Component {
               </div>
               <div>
                 <a href="/changelog.txt" target="_blank" rel="noreferrer">
-                  Last updated January 20, 2022
+                  Last updated February 28, 2022
                 </a>
               </div>
             </footer>

@@ -223,3 +223,24 @@ div.light {
 div.dark {
   color: rgb(36, 36, 36);
 }
+
+.color-distribution-tool button.scroll-to-top {
+  position: fixed;
+  left: 0px;
+  top: 720px;
+  z-index: 1;
+}
+
+.color-distribution-tool button.expand-all {
+  position: fixed;
+  left: 0px;
+  top: 740px;
+  z-index: 1;
+}
+
+.color-distribution-tool button.collapse-all {
+  position: fixed;
+  left: 0px;
+  top: 760px;
+  z-index: 1;
+}

@@ -40,3 +40,13 @@ Minor
   - Added more names to the "mushrooms" name list
   - Added more names to the "edwards" name list
   - Added more names to the "monos" name list
+
+February 28, 2021
+====
+Bugfixes
+  - No longer displays scorps under a color category if the color is present in the metadata, but not in the image
+Major
+  - Added some buttons to the color distribution tool: scroll to top, expand all, collapse all
+  - Added filters for colors on the color distribution tool
+Minor
+  - Added more names to some name lists

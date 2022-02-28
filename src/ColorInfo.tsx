@@ -3,9 +3,6 @@ import { scropEasterEgg } from "./util";
 import { SCORP_COLORS } from "./constants";
 import { Colors } from "./types";
 
-const metadata = require("./metadata.json");
-const scorpList = metadata.entries;
-
 type ColorInfoProps = {
   hexCode: string;
 };
@@ -82,13 +79,6 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
       string[]
     ][]) {
       for (const scorpId of scorpIds) {
-        if (
-          colorLocation === "secondary_color" &&
-          !scorpList[scorpId].attributes.multicolored
-        ) {
-          continue;
-        }
-
         sections[colorLocation].push(
           <a
             href={`https://radstrike.com/scorpions/info/?number=${scorpId}`}

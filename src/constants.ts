@@ -24,7 +24,10 @@ const SCORP_COLORS: ColorDistribution = {};
 
 // Construct SCORP_COLORS object
 ids.forEach((scorpId: string) => {
-  const colors = getScorpMetadata(scorpId).colors;
+  const metadata = getScorpMetadata(scorpId);
+
+  const attributes = metadata.attributes;
+  const colors = metadata.colors;
 
   for (const [colorLocation, hexCode] of Object.entries(colors) as [
     keyof Colors,
@@ -45,11 +48,18 @@ ids.forEach((scorpId: string) => {
     }
 
     SCORP_COLORS[hexCode].occurrences++;
+
+    if (attributes.bg_style === "blank" && colorLocation === "bg_color") {
+      continue;
+    }
+
+    if (!attributes.multicolored && colorLocation === "secondary_color") {
+      continue;
+    }
+
     SCORP_COLORS[hexCode].scorps[colorLocation].add(scorpId);
   }
 });
-
-console.log("scorp colors:", SCORP_COLORS);
 
 // Sort SCORP_COLORS.
 
@@ -67,6 +77,8 @@ const SORTED_COLOR_DISTRIBUTION: string[] = Object.entries(SCORP_COLORS)
     return 0;
   })
   .map(([color, _]: [string, ScorpCount]): string => color);
+
+console.log(SORTED_COLOR_DISTRIBUTION);
 
 const NAME_LIST = {
   supraPrefixes: ["Dr. ", "Mr. ", "Ms. ", "Mrs. ", "Miss ", "O'"],
@@ -1098,6 +1110,9 @@ const NAME_LIST = {
     "thrower",
     "squash",
     "racket",
+    "federer",
+    "nadal",
+    "djokovic",
   ],
   druglords: [
     "dealer",
@@ -1121,6 +1136,15 @@ const NAME_LIST = {
     "euphoric",
     "whippet",
     "acid",
+    "al capone",
+    "scarface",
+    "coke",
+    "cokehead",
+    "weed",
+    "cannabis",
+    "psychonaut",
+    "molly",
+    "benzo",
   ],
   monos: [
     "color",
@@ -1202,6 +1226,8 @@ const NAME_LIST = {
     "pin",
     "bowl",
     "alley",
+    "lawrence",
+    "okolie",
   ],
   mushies: [
     "shroom",
@@ -1228,6 +1254,12 @@ const NAME_LIST = {
     "musho",
   ],
   edwards: [
+    "hair",
+    "stylist",
+    "curly",
+    "strait",
+    "wavy",
+    "kinky",
     "dice",
     "dicer",
     "dicey",
@@ -1288,6 +1320,7 @@ const NAME_LIST = {
     "ghastly",
     "haunt",
     "boo",
+    "haunt",
   ],
   blind: [
     "blind",
@@ -1300,6 +1333,7 @@ const NAME_LIST = {
     "glasses",
     "monk",
     "window",
+    "cane",
   ],
   syringe_tails: [
     "pokey",
@@ -1312,6 +1346,10 @@ const NAME_LIST = {
     "drug",
     "heroin",
     "aids",
+    "virus",
+    "covid",
+    "vaccine",
+    "antivaxxer",
   ],
   fat_tails: ["dino", "fatty", "biggie", "big butt", "dinosaur", "beaver"],
   ball_tails: [
@@ -1372,4 +1410,126 @@ const MAIN_NAMES = NAME_LIST.top100us
   .concat(NAME_LIST.globalNames)
   .concat(NAME_LIST.general);
 
-export { SCORP_COLORS, SORTED_COLOR_DISTRIBUTION, NAME_LIST, MAIN_NAMES };
+const MANUAL_TAGGED_COLORS = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "blue",
+  "purple",
+  "pink",
+  "brown(ish)",
+  "other",
+];
+
+const MANUALLY_TAGGED_SCORP_COLORS = {
+  "#2F0043": ["purple"],
+  "#2F00FF": ["blue"],
+  "#0000FF": ["blue"],
+  "#6D0000": ["red"],
+  "#6D0043": ["red"],
+  "#6D00FF": ["purple"],
+  "#B40043": ["red", "pink"],
+  "#000043": ["blue"],
+  "#002F00": ["green"],
+  "#6D009B": ["purple"],
+  "#2F009B": ["blue"],
+  "#FF2F00": ["red", "orange"],
+  "#2F0000": ["red"],
+  "#006D00": ["green"],
+  "#00009B": ["blue"],
+  "#002F43": ["blue"],
+  "#006D9B": ["blue"],
+  "#2F2F00": ["brown(ish)"],
+  "#FF009B": ["pink"],
+  "#002FFF": ["blue"],
+  "#FF0043": ["red"],
+  "#2FFF00": ["green"],
+  "#002F9B": ["blue"],
+  "#6D2F00": ["brown(ish)"],
+  "#00B443": ["green"],
+  "#B40000": ["red"],
+  "#FF6D00": ["orange"],
+  "#2F6D00": ["green"],
+  "#2FB400": ["green"],
+  "#FF0000": ["red"],
+  "#006D43": ["green"],
+  "#6D6D00": ["brown(ish)"],
+  "#FFFF00": ["yellow"],
+  "#00B400": ["green"],
+  "#B42F00": ["red", "orange", "brown(ish)"],
+  "#00FF43": ["green"],
+  "#00B4FF": ["blue"],
+  "#00FFFF": ["blue"],
+  "#B4FF00": ["green"],
+  "#006DFF": ["blue"],
+  "#6DFF00": ["green"],
+  "#FF00FF": ["pink"],
+  "#B4009B": ["pink"],
+  "#00B49B": ["green"],
+  "#00FF00": ["green"],
+  "#FFB400": ["orange"],
+  "#6DB400": ["green"],
+  "#B4B400": ["yellow"],
+  "#B400FF": ["purple"],
+  "#00FF9B": ["green"],
+  "#B46D00": ["brown(ish)", "orange"],
+  "#2F2FFF": ["blue"],
+  "#2F6D43": ["green"],
+  "#6D6DFF": ["blue"],
+  "#2FFF43": ["green"],
+  "#2F2F9B": ["blue"],
+  "#6DFFFF": ["blue"],
+  "#2F6D9B": ["blue"],
+  "#2F2F43": ["other"],
+  "#6D2F43": ["red", "brown(ish)"],
+  "#B42F43": ["red"],
+  "#B46D43": ["brown(ish)"],
+  "#B4FF9B": ["green"],
+  "#6DFF9B": ["green"],
+  "#B42F9B": ["purple", "pink"],
+  "#B4FF43": ["green"],
+  "#B42FFF": ["purple"],
+  "#6D6D43": ["other", "brown(ish)"],
+  "#B4B49B": ["other", "brown(ish)"],
+  "#FF2F43": ["red"],
+  "#FF2F9B": ["red", "pink"],
+  "#B46DFF": ["purple"],
+  "#B46D9B": ["pink", "purple"],
+  "#6DB443": ["green"],
+  "#6DB49B": ["green"],
+  "#FFB49B": ["pink"],
+  "#FF6D43": ["orange"],
+  "#2FFF9B": ["green"],
+  "#6D2FFF": ["blue"],
+  "#6D6D9B": ["blue"],
+  "#FF6D9B": ["pink"],
+  "#FF2FFF": ["pink"],
+  "#FFB4FF": ["pink"],
+  "#6DB4FF": ["blue"],
+  "#B4B4FF": ["purple"],
+  "#2FB49B": ["green"],
+  "#2FB4FF": ["blue"],
+  "#6DFF43": ["green"],
+  "#2FB443": ["green"],
+  "#FF6DFF": ["pink"],
+  "#B4FFFF": ["blue"],
+  "#2F6DFF": ["blue"],
+  "#FFB443": ["orange"],
+  "#FFFF43": ["yellow"],
+  "#B4B443": ["yellow"],
+  "#FFFF9B": ["yellow"],
+  "#2FFFFF": ["blue"],
+  "#6D2F9B": ["purple"],
+  "#FFFFFF": ["other"],
+  "#000000": ["other"],
+};
+
+export {
+  SCORP_COLORS,
+  SORTED_COLOR_DISTRIBUTION,
+  NAME_LIST,
+  MAIN_NAMES,
+  MANUAL_TAGGED_COLORS,
+  MANUALLY_TAGGED_SCORP_COLORS,
+};
