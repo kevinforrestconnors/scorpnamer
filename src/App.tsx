@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from "react";
+import React from "react";
 import "./App.css";
 import { generateName } from "./scrop-names";
 import { ColorDistribution } from "./scorp-tools";
