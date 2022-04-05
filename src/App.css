@@ -185,12 +185,14 @@ h6 {
   color: rgb(36, 36, 36);
 }
 
-.color-info_scorps-of-color-container {
+.color-info_scorps-of-color-container,
+.filtered-scorpions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
 
-.color-info_scorps-of-color-element {
+.color-info_scorps-of-color-element,
+.filtered-scorpions-div {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -243,4 +245,40 @@ div.dark {
   left: 0px;
   bottom: 0;
   z-index: 1;
+}
+
+.color-distribution-tool button.reset-all-filters {
+  position: fixed;
+  left: 0px;
+  bottom: 75px;
+  z-index: 1;
+}
+
+.filters_container {
+  margin: 10px auto;
+  max-width: 900px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 160px);
+  column-width: 160px;
+  gap: 10px;
+  justify-content: center;
+}
+
+.filter_segment {
+  text-align: left;
+  vertical-align: top;
+  /* width: 180px;
+	margin: 16px; */
+  white-space: nowrap;
+}
+
+.filters_link {
+  text-align: center;
+}
+
+.filters_link a {
+  text-decoration: none;
 }

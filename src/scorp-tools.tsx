@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 
 export function ColorDistribution(props: {
   colorFilters: { [color: string]: boolean };
+  scorpionFilters: { [attName: string]: Set<string> };
 }): React.ReactElement {
   const colorFilters = props.colorFilters;
 
@@ -24,7 +25,13 @@ export function ColorDistribution(props: {
     if (!shouldDisplay) {
       return <></>;
     }
-    return <ColorInfo key={nanoid()} hexCode={hexCode}></ColorInfo>;
+    return (
+      <ColorInfo
+        key={nanoid()}
+        hexCode={hexCode}
+        scorpionFilters={props.scorpionFilters}
+      ></ColorInfo>
+    );
   });
 
   return <div className="color-info_grid">{ColorInfos}</div>;

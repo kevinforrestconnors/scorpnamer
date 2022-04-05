@@ -2,9 +2,11 @@ import React from "react";
 import { scropEasterEgg } from "./util";
 import { SCORP_COLORS } from "./constants";
 import { Colors } from "./types";
+import { getScorpMetadata } from "./scorp-data";
 
 type ColorInfoProps = {
   hexCode: string;
+  scorpionFilters: { [attName: string]: Set<string> };
 };
 
 export class ColorInfo extends React.Component<ColorInfoProps> {
@@ -33,18 +35,9 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
     return luminance < 140 ? "light" : "dark";
   }
 
-  getScorpCountOfColor() {
-    return (
-      SCORP_COLORS[this.props.hexCode].scorps.body_color.size +
-      SCORP_COLORS[this.props.hexCode].scorps.bg2_color.size +
-      SCORP_COLORS[this.props.hexCode].scorps.bg_color.size +
-      SCORP_COLORS[this.props.hexCode].scorps.secondary_color.size +
-      SCORP_COLORS[this.props.hexCode].scorps.outline_color.size +
-      SCORP_COLORS[this.props.hexCode].scorps.eye_color.size
-    );
-  }
-
-  buildScorpsOfColorGrid(): React.ReactElement {
+  buildScorpsOfColorGrid() {
+    const filters = this.props.scorpionFilters;
+    let scorpCount = 0;
     const textStyle = this.getTextStyleLightOrDark();
     let scorpsOfColor: {
       [key in keyof Colors]: string[];
@@ -79,23 +72,42 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
       string[]
     ][]) {
       for (const scorpId of scorpIds) {
-        sections[colorLocation].push(
-          <a
-            href={`https://radstrike.com/scorpions/info/?number=${scorpId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <div
+        let passFilter = true;
+        const attributes: any = getScorpMetadata(scorpId).attributes;
+        for (const traitName of Object.keys(attributes)) {
+          if (!filters[traitName] || filters[traitName].size === 0) {
+            continue;
+          }
+
+          if (filters[traitName].has(attributes[traitName].toString())) {
+            continue;
+          } else {
+            passFilter = false;
+            break;
+          }
+        }
+
+        if (passFilter) {
+          scorpCount++;
+          sections[colorLocation].push(
+            <a
               key={scorpId}
-              className="color-info_scorps-of-color-element"
-              style={{ backgroundImage: `url(/img/${scorpId}_large.png)` }}
-            ></div>
-          </a>
-        );
+              href={`https://radstrike.com/scorpions/info/?number=${scorpId}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div
+                className="color-info_scorps-of-color-element"
+                style={{ backgroundImage: `url(/img/${scorpId}_large.png)` }}
+              ></div>
+            </a>
+          );
+        }
       }
     }
 
-    return (
+    return [
+      scorpCount,
       <div>
         <div>
           <div className={`color-info_scorps-of-color-header ${textStyle}`}>
@@ -149,14 +161,15 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
             {sections.eye_color}
           </div>
         </div>
-      </div>
-    );
+      </div>,
+    ];
   }
 
   render() {
     const textStyle = this.getTextStyleLightOrDark();
     const count = SCORP_COLORS[this.props.hexCode].occurrences;
-    const scorpCount = this.getScorpCountOfColor();
+
+    const [scorpCount, scorpsOfColor] = this.buildScorpsOfColorGrid();
 
     return (
       <label
@@ -174,7 +187,8 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
               {this.props.hexCode} occurs {count} times.{" "}
             </div>
             <div>
-              {scorpCount} {scropEasterEgg("scorp")}s have this.
+              {scorpCount} {scropEasterEgg("scorp")}s with current filters have
+              this.
             </div>
           </div>
         </div>
@@ -183,9 +197,7 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
           className="color-info_show-hide-button"
           type="checkbox"
         ></input>
-        <div className="color-info_scorp-list">
-          {this.buildScorpsOfColorGrid()}
-        </div>
+        <div className="color-info_scorp-list">{scorpsOfColor}</div>
       </label>
     );
   }

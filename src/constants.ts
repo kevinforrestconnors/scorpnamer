@@ -78,8 +78,6 @@ const SORTED_COLOR_DISTRIBUTION: string[] = Object.entries(SCORP_COLORS)
   })
   .map(([color, _]: [string, ScorpCount]): string => color);
 
-console.log(SORTED_COLOR_DISTRIBUTION);
-
 const NAME_LIST = {
   supraPrefixes: ["Dr. ", "Mr. ", "Ms. ", "Mrs. ", "Miss ", "O'"],
   supraSuffixes: [
