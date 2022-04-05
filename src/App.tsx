@@ -989,7 +989,7 @@ class App extends React.Component {
               </div>
               <div>
                 <a href="/changelog.txt" target="_blank" rel="noreferrer">
-                  Last updated February 28, 2022
+                  Last updated April 5, 2022
                 </a>
               </div>
             </footer>

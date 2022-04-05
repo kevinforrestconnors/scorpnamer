@@ -8,7 +8,7 @@ Bugfixes
   - Fixed a bug where the id was not updating
 
 
-January 18, 2021
+January 18, 2022
 ====
 Major
   - Clicking color distribution colors now opens a pane that shows all scorpions with that color
@@ -24,7 +24,7 @@ Minor
 Bugfix
   - name could end in "the"
 
-January 17, 2021
+January 17, 2022
 ====
 Bugfixes
   - Fixed a bug where "isMono" was comparing color names (which can collide if hex code is not an exact match) instead of hex codes.
@@ -41,7 +41,7 @@ Minor
   - Added more names to the "edwards" name list
   - Added more names to the "monos" name list
 
-February 28, 2021
+February 28, 2022
 ====
 Bugfixes
   - No longer displays scorps under a color category if the color is present in the metadata, but not in the image
@@ -50,3 +50,8 @@ Major
   - Added filters for colors on the color distribution tool
 Minor
   - Added more names to some name lists
+
+April 5, 2022
+====
+Major
+  - Adds filters for scorpions
