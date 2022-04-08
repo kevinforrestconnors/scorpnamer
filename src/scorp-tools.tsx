@@ -4,7 +4,7 @@ import {
 } from "./constants";
 import { ColorInfo } from "./ColorInfo";
 import { nanoid } from "nanoid";
-import { getOwnedScorps } from "./util";
+import { getOwnedScorps, deltaE, hexToRgb } from "./util";
 import { useEffect, useState } from "react";
 
 export function ColorDistribution(props: {
@@ -13,6 +13,8 @@ export function ColorDistribution(props: {
   scorpionFilters: { [attName: string]: Set<string> };
   otherFilters: {
     mono: boolean;
+    psuedoMono: boolean;
+    psuedoMonoTolerance: number;
     bodyEqBg2: boolean;
     secondaryEqBg2: boolean;
     secondaryEqBg: boolean;
@@ -28,8 +30,6 @@ export function ColorDistribution(props: {
       })();
     }
   }, [owners, props.walletFilter]);
-
-  //console.log(owners);
 
   const colorFilters = props.colorFilters;
 

@@ -31,6 +31,8 @@ class App extends React.Component {
     scorpionFilters: { [attName: string]: Set<string> };
     otherFilters: {
       mono: boolean;
+      psuedoMono: boolean;
+      psuedoMonoTolerance: number;
       bodyEqBg2: boolean;
       secondaryEqBg2: boolean;
       secondaryEqBg: boolean;
@@ -83,6 +85,8 @@ class App extends React.Component {
       },
       otherFilters: {
         mono: false,
+        psuedoMono: false,
+        psuedoMonoTolerance: 3,
         bodyEqBg2: false,
         secondaryEqBg2: false,
         secondaryEqBg: false,
@@ -171,8 +175,6 @@ class App extends React.Component {
         [traitType]: set,
       },
     });
-
-    console.log(traitType, traitValue, addOrRemove, this.state.scorpionFilters);
   };
 
   render() {
@@ -333,6 +335,43 @@ class App extends React.Component {
                         });
                       }}
                     />
+                  </label>
+                </div>
+                <div style={{ fontWeight: "bold" }}>
+                  <label htmlFor="psuedomono">
+                    <b>psuedomono</b>
+                    <input
+                      type="checkbox"
+                      id="psuedomono"
+                      name="black"
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+
+                        this.setState({
+                          otherFilters: {
+                            ...this.state.otherFilters,
+                            psuedoMono: checked,
+                          },
+                        });
+                      }}
+                    />
+                    <input
+                      type="range"
+                      min="1"
+                      max="30"
+                      value={this.state.otherFilters.psuedoMonoTolerance}
+                      onChange={(e) => {
+                        this.setState({
+                          otherFilters: {
+                            ...this.state.otherFilters,
+                            psuedoMonoTolerance: e.target.value,
+                          },
+                        });
+                      }}
+                    ></input>{" "}
+                    <span>
+                      tolerance: {this.state.otherFilters.psuedoMonoTolerance}
+                    </span>
                   </label>
                 </div>
 

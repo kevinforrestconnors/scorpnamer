@@ -9,6 +9,8 @@ type ColorInfoProps = {
   scorpionFilters: { [attName: string]: Set<string> };
   otherFilters: {
     mono: boolean;
+    psuedoMono: boolean;
+    psuedoMonoTolerance: number;
     bodyEqBg2: boolean;
     secondaryEqBg2: boolean;
     secondaryEqBg: boolean;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getScorpMetadata } from "./scorp-data";
-import { scropEasterEgg, getOwnedScorps } from "./util";
+import { scropEasterEgg, getOwnedScorps, deltaE, hexToRgb } from "./util";
 
 const allScorpIds: string[] = [];
 for (let i = 0; i < 10000; i++) {
@@ -18,6 +18,8 @@ export function FilteredScorpions(props: {
   scorpionFilters: { [attName: string]: Set<string> };
   otherFilters: {
     mono: boolean;
+    psuedoMono: boolean;
+    psuedoMonoTolerance: number;
     bodyEqBg2: boolean;
     secondaryEqBg2: boolean;
     secondaryEqBg: boolean;
@@ -34,8 +36,6 @@ export function FilteredScorpions(props: {
     }
   }, [owners, props.walletFilter]);
 
-  //console.log(owners);
-
   function passesFilters(id: string): boolean {
     let passFilter = true;
     const attributes: any = getScorpMetadata(id).attributes;
@@ -46,6 +46,17 @@ export function FilteredScorpions(props: {
         colors.bg2_color === colors.body_color &&
         attributes.bg_style === "blank" &&
         attributes.multicolored === false;
+    }
+
+    if (passFilter && props.otherFilters.psuedoMono) {
+      const body_color = hexToRgb(colors.body_color);
+      const bg2_color = hexToRgb(colors.bg2_color);
+
+      return (
+        attributes.bg_style === "blank" &&
+        attributes.multicolored === false &&
+        deltaE(body_color, bg2_color) < props.otherFilters.psuedoMonoTolerance
+      );
     }
 
     if (passFilter && props.otherFilters.bodyEqBg2) {
