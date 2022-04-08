@@ -13,6 +13,9 @@ export function ColorDistribution(props: {
   scorpionFilters: { [attName: string]: Set<string> };
   otherFilters: {
     mono: boolean;
+    bodyEqBg2: boolean;
+    secondaryEqBg2: boolean;
+    secondaryEqBg: boolean;
   };
 }): React.ReactElement {
   const [owners, setOwners] = useState<string[]>([]);

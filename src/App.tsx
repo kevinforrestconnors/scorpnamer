@@ -31,6 +31,9 @@ class App extends React.Component {
     scorpionFilters: { [attName: string]: Set<string> };
     otherFilters: {
       mono: boolean;
+      bodyEqBg2: boolean;
+      secondaryEqBg2: boolean;
+      secondaryEqBg: boolean;
     };
     dontShowColorDistribution: boolean;
   };
@@ -80,6 +83,9 @@ class App extends React.Component {
       },
       otherFilters: {
         mono: false,
+        bodyEqBg2: false,
+        secondaryEqBg2: false,
+        secondaryEqBg: false,
       },
       dontShowColorDistribution: false,
     };
@@ -329,6 +335,7 @@ class App extends React.Component {
                     />
                   </label>
                 </div>
+
                 <div className="filters_container">
                   <div
                     className="filters"
@@ -1052,9 +1059,68 @@ class App extends React.Component {
                   </div> */}
 
                   <h3>Now Filter By Color 🎨</h3>
+                  <div>
+                    {" "}
+                    <label htmlFor="bodyEqBg2">
+                      <b>body color = background color</b>
+                      <input
+                        type="checkbox"
+                        id="bodyEqBg2"
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+
+                          this.setState({
+                            otherFilters: {
+                              ...this.state.otherFilters,
+                              bodyEqBg2: checked,
+                            },
+                          });
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    {" "}
+                    <label htmlFor="secondaryEqBg2">
+                      <b>secondary color = background color</b>
+                      <input
+                        type="checkbox"
+                        id="secondaryEqBg2"
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+
+                          this.setState({
+                            otherFilters: {
+                              ...this.state.otherFilters,
+                              secondaryEqBg2: checked,
+                            },
+                          });
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label htmlFor="secondaryEqBg">
+                      <b>secondary color = secondary background color</b>
+                      <input
+                        type="checkbox"
+                        id="secondaryEqBg"
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+
+                          this.setState({
+                            otherFilters: {
+                              ...this.state.otherFilters,
+                              secondaryEqBg: checked,
+                            },
+                          });
+                        }}
+                      />
+                    </label>
+                  </div>
                   <div className="color-distribution-filters">
-                    <div style={{ fontWeight: "bold" }}>
-                      then click the color boxes to expand and view the{" "}
+                    <div style={{ fontWeight: "default" }}>
+                      click the color boxes to expand and view the{" "}
                       {scropEasterEgg("scorpion")}s with your filters
                     </div>
                     <div>

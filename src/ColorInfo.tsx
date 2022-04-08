@@ -9,6 +9,9 @@ type ColorInfoProps = {
   scorpionFilters: { [attName: string]: Set<string> };
   otherFilters: {
     mono: boolean;
+    bodyEqBg2: boolean;
+    secondaryEqBg2: boolean;
+    secondaryEqBg: boolean;
   };
 };
 
@@ -77,17 +80,29 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
       for (const scorpId of scorpIds) {
         let passFilter = true;
 
+        const colors: any = getScorpMetadata(scorpId).colors;
         const attributes: any = getScorpMetadata(scorpId).attributes;
 
-        if (this.props.otherFilters.mono) {
-          const colors: any = getScorpMetadata(scorpId).colors;
-          const isMono =
+        if (passFilter && this.props.otherFilters.mono) {
+          passFilter =
             colors.bg2_color === colors.body_color &&
             attributes.bg_style === "blank" &&
             attributes.multicolored === false;
-          if (!isMono) {
-            passFilter = false;
-          }
+        }
+
+        if (passFilter && this.props.otherFilters.bodyEqBg2) {
+          passFilter = colors.body_color === colors.bg2_color;
+        }
+        if (passFilter && this.props.otherFilters.secondaryEqBg2) {
+          passFilter =
+            attributes.multicolored &&
+            colors.secondary_color === colors.bg2_color;
+        }
+        if (passFilter && this.props.otherFilters.secondaryEqBg) {
+          passFilter =
+            attributes.multicolored &&
+            colors.secondary_color === colors.bg_color &&
+            attributes.bg_style !== "blank";
         }
 
         if (passFilter) {

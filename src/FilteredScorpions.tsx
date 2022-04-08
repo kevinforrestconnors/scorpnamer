@@ -18,6 +18,9 @@ export function FilteredScorpions(props: {
   scorpionFilters: { [attName: string]: Set<string> };
   otherFilters: {
     mono: boolean;
+    bodyEqBg2: boolean;
+    secondaryEqBg2: boolean;
+    secondaryEqBg: boolean;
   };
 }): React.ReactElement {
   const [owners, setOwners] = useState<string[]>([]);
@@ -36,16 +39,27 @@ export function FilteredScorpions(props: {
   function passesFilters(id: string): boolean {
     let passFilter = true;
     const attributes: any = getScorpMetadata(id).attributes;
+    const colors: any = getScorpMetadata(id).colors;
 
-    if (props.otherFilters.mono) {
-      const colors: any = getScorpMetadata(id).colors;
-      const isMono =
+    if (passFilter && props.otherFilters.mono) {
+      passFilter =
         colors.bg2_color === colors.body_color &&
         attributes.bg_style === "blank" &&
         attributes.multicolored === false;
-      if (!isMono) {
-        passFilter = false;
-      }
+    }
+
+    if (passFilter && props.otherFilters.bodyEqBg2) {
+      passFilter = colors.body_color === colors.bg2_color;
+    }
+    if (passFilter && props.otherFilters.secondaryEqBg2) {
+      passFilter =
+        attributes.multicolored && colors.secondary_color === colors.bg2_color;
+    }
+    if (passFilter && props.otherFilters.secondaryEqBg) {
+      passFilter =
+        attributes.multicolored &&
+        colors.secondary_color === colors.bg_color &&
+        attributes.bg_style !== "blank";
     }
 
     if (passFilter) {
