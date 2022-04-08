@@ -7,6 +7,9 @@ import { getScorpMetadata } from "./scorp-data";
 type ColorInfoProps = {
   hexCode: string;
   scorpionFilters: { [attName: string]: Set<string> };
+  otherFilters: {
+    mono: boolean;
+  };
 };
 
 export class ColorInfo extends React.Component<ColorInfoProps> {
@@ -73,17 +76,31 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
     ][]) {
       for (const scorpId of scorpIds) {
         let passFilter = true;
-        const attributes: any = getScorpMetadata(scorpId).attributes;
-        for (const traitName of Object.keys(attributes)) {
-          if (!filters[traitName] || filters[traitName].size === 0) {
-            continue;
-          }
 
-          if (filters[traitName].has(attributes[traitName].toString())) {
-            continue;
-          } else {
+        const attributes: any = getScorpMetadata(scorpId).attributes;
+
+        if (this.props.otherFilters.mono) {
+          const colors: any = getScorpMetadata(scorpId).colors;
+          const isMono =
+            colors.bg2_color === colors.body_color &&
+            attributes.bg_style === "blank";
+          if (!isMono) {
             passFilter = false;
-            break;
+          }
+        }
+
+        if (passFilter) {
+          for (const traitName of Object.keys(attributes)) {
+            if (!filters[traitName] || filters[traitName].size === 0) {
+              continue;
+            }
+
+            if (filters[traitName].has(attributes[traitName].toString())) {
+              continue;
+            } else {
+              passFilter = false;
+              break;
+            }
           }
         }
 

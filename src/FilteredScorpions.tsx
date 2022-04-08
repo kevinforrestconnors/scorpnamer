@@ -16,6 +16,9 @@ for (let i = 0; i < 10000; i++) {
 export function FilteredScorpions(props: {
   walletFilter: string;
   scorpionFilters: { [attName: string]: Set<string> };
+  otherFilters: {
+    mono: boolean;
+  };
 }): React.ReactElement {
   const [owners, setOwners] = useState<string[]>([]);
 
@@ -33,23 +36,37 @@ export function FilteredScorpions(props: {
   function passesFilters(id: string): boolean {
     let passFilter = true;
     const attributes: any = getScorpMetadata(id).attributes;
-    for (const traitName of Object.keys(attributes)) {
-      if (
-        !props.scorpionFilters[traitName] ||
-        props.scorpionFilters[traitName].size === 0
-      ) {
-        continue;
-      }
 
-      if (
-        props.scorpionFilters[traitName].has(attributes[traitName].toString())
-      ) {
-        continue;
-      } else {
+    if (props.otherFilters.mono) {
+      const colors: any = getScorpMetadata(id).colors;
+      const isMono =
+        colors.bg2_color === colors.body_color &&
+        attributes.bg_style === "blank";
+      if (!isMono) {
         passFilter = false;
-        break;
       }
     }
+
+    if (passFilter) {
+      for (const traitName of Object.keys(attributes)) {
+        if (
+          !props.scorpionFilters[traitName] ||
+          props.scorpionFilters[traitName].size === 0
+        ) {
+          continue;
+        }
+
+        if (
+          props.scorpionFilters[traitName].has(attributes[traitName].toString())
+        ) {
+          continue;
+        } else {
+          passFilter = false;
+          break;
+        }
+      }
+    }
+
     return passFilter;
   }
 

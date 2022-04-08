@@ -62,3 +62,4 @@ April 7, 2022
 ====
 Major
   - Adds filters for natty scorpions
+  - Adds filters for mono scorpions

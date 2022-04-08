@@ -11,6 +11,9 @@ export function ColorDistribution(props: {
   walletFilter: string;
   colorFilters: { [color: string]: boolean };
   scorpionFilters: { [attName: string]: Set<string> };
+  otherFilters: {
+    mono: boolean;
+  };
 }): React.ReactElement {
   const [owners, setOwners] = useState<string[]>([]);
 
@@ -46,6 +49,7 @@ export function ColorDistribution(props: {
         key={nanoid()}
         hexCode={hexCode}
         scorpionFilters={props.scorpionFilters}
+        otherFilters={props.otherFilters}
       ></ColorInfo>
     );
   });

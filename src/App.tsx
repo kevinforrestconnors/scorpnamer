@@ -29,6 +29,9 @@ class App extends React.Component {
     name: string;
     colorFilters: { [color: string]: boolean };
     scorpionFilters: { [attName: string]: Set<string> };
+    otherFilters: {
+      mono: boolean;
+    };
     dontShowColorDistribution: boolean;
   };
 
@@ -74,6 +77,9 @@ class App extends React.Component {
         false_face: new Set<string>(),
         evil_eye: new Set<string>(),
         no_eyes: new Set<string>(),
+      },
+      otherFilters: {
+        mono: false,
       },
       dontShowColorDistribution: false,
     };
@@ -298,6 +304,26 @@ class App extends React.Component {
 
                         checkboxes.forEach((c) => {
                           c.checked = checked;
+                        });
+                      }}
+                    />
+                  </label>
+                </div>
+                <div style={{ fontWeight: "bold" }}>
+                  <label htmlFor="mono">
+                    <b>mono</b>
+                    <input
+                      type="checkbox"
+                      id="mono"
+                      name="black"
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+
+                        this.setState({
+                          otherFilters: {
+                            ...this.state.otherFilters,
+                            mono: checked,
+                          },
                         });
                       }}
                     />
@@ -1058,12 +1084,14 @@ class App extends React.Component {
                       <FilteredScorpions
                         walletFilter={this.walletFilter.current?.value || ""}
                         scorpionFilters={this.state.scorpionFilters}
+                        otherFilters={this.state.otherFilters}
                       />
                     ) : (
                       <ColorDistribution
                         walletFilter={this.walletFilter.current?.value || ""}
                         colorFilters={this.state.colorFilters}
                         scorpionFilters={this.state.scorpionFilters}
+                        otherFilters={this.state.otherFilters}
                       ></ColorDistribution>
                     )}
                   </div>
