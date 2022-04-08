@@ -70,3 +70,8 @@ Major
   - adds a star if there are 3-5 scorpions of that color under given filters, 2 stars if 2, 3 stars if only 1
 Minor
   - makes your eyes hurt less
+
+April 8, 2022
+====
+Major
+  - Adds filters for psuedomonos
