@@ -128,56 +128,84 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
       scorpCount,
       <div>
         <div>
-          <div className={`color-info_scorps-of-color-header ${textStyle}`}>
-            body color
-          </div>
-          <div className={`color-info_scorps-of-color-container ${textStyle}`}>
-            {sections.body_color}
-          </div>
+          {sections.body_color.length > 0 && (
+            <>
+              {" "}
+              <div className={`color-info_scorps-of-color-header `}>
+                body color
+              </div>
+              <div className={`color-info_scorps-of-color-container `}>
+                {sections.body_color}
+              </div>
+            </>
+          )}
         </div>
         <div>
-          <div className={`color-info_scorps-of-color-header ${textStyle}`}>
-            main background color
-          </div>
-          <div className={`color-info_scorps-of-color-container ${textStyle}`}>
-            {sections.bg2_color}
-          </div>
+          {sections.bg2_color.length > 0 && (
+            <>
+              {" "}
+              <div className={`color-info_scorps-of-color-header `}>
+                main background color
+              </div>
+              <div
+                className={`color-info_scorps-of-color-container ${textStyle}`}
+              >
+                {sections.bg2_color}
+              </div>
+            </>
+          )}
         </div>
         <div>
-          <div className={`color-info_scorps-of-color-header ${textStyle}`}>
-            secondary background color
-          </div>
-          <div className={`color-info_scorps-of-color-container ${textStyle}`}>
-            {sections.bg_color}
-          </div>
+          {sections.bg_color.length > 0 && (
+            <>
+              {" "}
+              <div className={`color-info_scorps-of-color-header`}>
+                secondary background color
+              </div>
+              <div className={`color-info_scorps-of-color-container`}>
+                {sections.bg_color}
+              </div>
+            </>
+          )}
         </div>
         <div>
-          <div className={`color-info_scorps-of-color-header ${textStyle}`}>
-            outline color
-          </div>
-          <div className={`color-info_scorps-of-color-container ${textStyle}`}>
-            {sections.outline_color}
-          </div>
+          {sections.outline_color.length > 0 && (
+            <>
+              {" "}
+              <div className={`color-info_scorps-of-color-header`}>
+                outline color
+              </div>
+              <div className={`color-info_scorps-of-color-container`}>
+                {sections.outline_color}
+              </div>
+            </>
+          )}
         </div>
         <div>
-          <div className={`color-info_scorps-of-color-header ${textStyle}`}>
-            secondary color
-          </div>
-          <div className={`color-info_scorps-of-color-container ${textStyle}`}>
-            {sections.secondary_color.length > 0 ? (
-              sections.secondary_color
-            ) : (
-              <div className={textStyle}>none!</div>
-            )}
-          </div>
+          {sections.secondary_color.length > 0 && (
+            <>
+              {" "}
+              <div className={`color-info_scorps-of-color-header`}>
+                secondary color
+              </div>
+              <div className={`color-info_scorps-of-color-container`}>
+                {sections.secondary_color}
+              </div>
+            </>
+          )}
         </div>
         <div>
-          <div className={`color-info_scorps-of-color-header ${textStyle}`}>
-            eye color
-          </div>
-          <div className={`color-info_scorps-of-color-container ${textStyle}`}>
-            {sections.eye_color}
-          </div>
+          {sections.eye_color.length > 0 && (
+            <>
+              {" "}
+              <div className={`color-info_scorps-of-color-header`}>
+                eye color
+              </div>
+              <div className={`color-info_scorps-of-color-container`}>
+                {sections.eye_color}
+              </div>
+            </>
+          )}
         </div>
       </div>,
     ];
@@ -189,17 +217,41 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
 
     const [scorpCount, scorpsOfColor] = this.buildScorpsOfColorGrid();
 
+    if (scorpCount === 0) return null;
+
     return (
       <label
         htmlFor={this.props.hexCode}
         key={this.props.hexCode}
         className="color-info"
         style={{
-          backgroundColor: this.props.hexCode,
           border: `4px solid ${this.props.hexCode}`,
         }}
       >
-        <div className={`color-info_textbox ${textStyle}`}>
+        <div
+          className={`color-info_textbox ${textStyle}`}
+          style={{ backgroundColor: this.props.hexCode }}
+        >
+          <div>
+            {scorpCount === 1 && (
+              <div className="color-info_rare-star-container">
+                <div className="color-info_rare-star">☆ </div>
+                <span className="color-info_rare-star">☆ </span>
+                <span className="color-info_rare-star">☆</span>
+              </div>
+            )}
+            {scorpCount === 2 && (
+              <div className="color-info_rare-star-container">
+                <span className="color-info_rare-star">☆ </span>
+                <span className="color-info_rare-star">☆</span>
+              </div>
+            )}
+            {scorpCount > 2 && scorpCount < 6 && (
+              <div className="color-info_rare-star-container">
+                <span className="color-info_rare-star">☆</span>
+              </div>
+            )}
+          </div>
           <div className="color-info_text">
             <div>
               {this.props.hexCode} occurs {count} times.{" "}
