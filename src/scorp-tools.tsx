@@ -4,7 +4,7 @@ import {
 } from "./constants";
 import { ColorInfo } from "./ColorInfo";
 import { nanoid } from "nanoid";
-import { getOwnedScorps, deltaE, hexToRgb } from "./util";
+import { getOwnedScorps } from "./util";
 import { useEffect, useState } from "react";
 
 export function ColorDistribution(props: {

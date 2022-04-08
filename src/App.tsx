@@ -358,7 +358,7 @@ class App extends React.Component {
                     <input
                       type="range"
                       min="1"
-                      max="30"
+                      max="20"
                       value={this.state.otherFilters.psuedoMonoTolerance}
                       onChange={(e) => {
                         this.setState({

@@ -1,5 +1,5 @@
 import React from "react";
-import { scropEasterEgg } from "./util";
+import { scropEasterEgg, deltaE, hexToRgb } from "./util";
 import { SCORP_COLORS } from "./constants";
 import { Colors } from "./types";
 import { getScorpMetadata } from "./scorp-data";
@@ -90,6 +90,17 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
             colors.bg2_color === colors.body_color &&
             attributes.bg_style === "blank" &&
             attributes.multicolored === false;
+        }
+
+        if (passFilter && this.props.otherFilters.psuedoMono) {
+          const body_color = hexToRgb(colors.body_color);
+          const bg2_color = hexToRgb(colors.bg2_color);
+
+          passFilter =
+            attributes.bg_style === "blank" &&
+            attributes.multicolored === false &&
+            deltaE(body_color, bg2_color) <
+              this.props.otherFilters.psuedoMonoTolerance;
         }
 
         if (passFilter && this.props.otherFilters.bodyEqBg2) {
