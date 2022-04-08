@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 import "./App.css";
 import { generateName } from "./scrop-names";
 import { ColorDistribution } from "./scorp-tools";
@@ -20,6 +20,7 @@ function rollScorp() {
 }
 
 class App extends React.Component {
+  walletFilter: RefObject<HTMLInputElement>;
   state: {
     scorpId: string;
     image: string;
@@ -34,6 +35,7 @@ class App extends React.Component {
   constructor(props: any) {
     super(props);
     const scorpId = rollScorp();
+    this.walletFilter = React.createRef();
     this.state = {
       scorpId,
       image: `/img/${scorpId}_large.png`,
@@ -52,7 +54,27 @@ class App extends React.Component {
         },
         {}
       ),
-      scorpionFilters: {},
+      scorpionFilters: {
+        outline_type: new Set<string>(),
+        bg_style: new Set<string>(),
+        claw_left: new Set<string>(),
+        claw_right: new Set<string>(),
+        claws_unique: new Set<string>(),
+        has_cigarette: new Set<string>(),
+        legs: new Set<string>(),
+        tail: new Set<string>(),
+        bloody_tail: new Set<string>(),
+        has_matches: new Set<string>(),
+        has_halo: new Set<string>(),
+        multicolored: new Set<string>(),
+        colored_claws: new Set<string>(),
+        colored_core: new Set<string>(),
+        colored_tail: new Set<string>(),
+        multicolor_type: new Set<string>(),
+        false_face: new Set<string>(),
+        evil_eye: new Set<string>(),
+        no_eyes: new Set<string>(),
+      },
       dontShowColorDistribution: false,
     };
   }
@@ -120,6 +142,25 @@ class App extends React.Component {
       );
     });
     return filterList;
+  };
+
+  ToggleTraitFilter = (
+    traitType: string,
+    traitValue: string,
+    addOrRemove: boolean = true
+  ) => {
+    const set = this.state.scorpionFilters[traitType];
+
+    addOrRemove ? set.add(traitValue) : set.delete(traitValue);
+
+    this.setState({
+      scorpionFilters: {
+        ...this.state.scorpionFilters,
+        [traitType]: set,
+      },
+    });
+
+    console.log(traitType, traitValue, addOrRemove, this.state.scorpionFilters);
   };
 
   render() {
@@ -209,6 +250,59 @@ class App extends React.Component {
                 <div style={{ fontWeight: "bold" }}>
                   apply filters for traits:
                 </div>
+                <div style={{ fontWeight: "bold" }}>
+                  <label htmlFor="natty">
+                    <b>natty</b>
+                    <input
+                      type="checkbox"
+                      id="natty"
+                      name="black"
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+
+                        const nattyTraits = {
+                          outline_type: "black",
+                          bg_style: "blank",
+                          claw_left: "regular",
+                          claw_right: "regular",
+                          claws_unique: "false",
+                          has_cigarette: "false",
+                          legs: "normal",
+                          tail: "normal",
+                          bloody_tail: "false",
+                          has_matches: "false",
+                          has_halo: "false",
+                          multicolored: "false",
+                          colored_claws: "false",
+                          colored_core: "false",
+                          colored_tail: "false",
+                          multicolor_type: "none",
+                          false_face: "none",
+                          evil_eye: "none",
+                          no_eyes: "false",
+                        };
+
+                        Object.entries(nattyTraits).forEach(
+                          ([traitType, traitValue]) => {
+                            this.ToggleTraitFilter(
+                              traitType,
+                              traitValue,
+                              checked
+                            );
+                          }
+                        );
+
+                        const checkboxes = document.querySelectorAll(
+                          "#outline_type__black, #bg_style__blank, #claw_left__regular, #claw_right__regular, #claws_unique__false, #has_cigarette__false, #legs__normal, #tail__normal, #bloody_tail__false, #has_matches__false, #has_halo__false, #multicolored__false, #colored_claws__false, #colored_core__false, #colored_tail__false, #multicolor_type__none, #false_face__none, #evil_eye__none, #no_eyes__false"
+                        ) as NodeListOf<HTMLInputElement>;
+
+                        checkboxes.forEach((c) => {
+                          c.checked = checked;
+                        });
+                      }}
+                    />
+                  </label>
+                </div>
                 <div className="filters_container">
                   <div
                     className="filters"
@@ -221,19 +315,7 @@ class App extends React.Component {
                         const checked = input.checked;
                         const [traitType, traitValue] = trait.split("__");
 
-                        const set =
-                          this.state.scorpionFilters[traitType] || new Set();
-
-                        checked ? set.add(traitValue) : set.delete(traitValue);
-
-                        console.log(this.state.scorpionFilters[traitType]);
-
-                        this.setState({
-                          scorpionFilters: {
-                            ...this.state.scorpionFilters,
-                            [traitType]: set,
-                          },
-                        });
+                        this.ToggleTraitFilter(traitType, traitValue, checked);
                       }
                     }}
                   >
@@ -885,32 +967,36 @@ class App extends React.Component {
                   >
                     scroll to top
                   </button>
-                  <button
-                    className="expand-all"
-                    onClick={() => {
-                      const checkboxes = document.getElementsByClassName(
-                        "color-info_show-hide-button"
-                      ) as HTMLCollectionOf<HTMLInputElement>;
-                      for (let i = 0; i < checkboxes.length; i++) {
-                        checkboxes[i].checked = true; // eslint-ignore-line
-                      }
-                    }}
-                  >
-                    expand all
-                  </button>
-                  <button
-                    className="collapse-all"
-                    onClick={() => {
-                      const checkboxes = document.getElementsByClassName(
-                        "color-info_show-hide-button"
-                      ) as HTMLCollectionOf<HTMLInputElement>;
-                      for (let i = 0; i < checkboxes.length; i++) {
-                        checkboxes[i].checked = false; // eslint-ignore-line
-                      }
-                    }}
-                  >
-                    collapse all
-                  </button>
+                  {!this.state.dontShowColorDistribution && (
+                    <button
+                      className="expand-all"
+                      onClick={() => {
+                        const checkboxes = document.getElementsByClassName(
+                          "color-info_show-hide-button"
+                        ) as HTMLCollectionOf<HTMLInputElement>;
+                        for (let i = 0; i < checkboxes.length; i++) {
+                          checkboxes[i].checked = true; // eslint-ignore-line
+                        }
+                      }}
+                    >
+                      expand all
+                    </button>
+                  )}
+                  {!this.state.dontShowColorDistribution && (
+                    <button
+                      className="collapse-all"
+                      onClick={() => {
+                        const checkboxes = document.getElementsByClassName(
+                          "color-info_show-hide-button"
+                        ) as HTMLCollectionOf<HTMLInputElement>;
+                        for (let i = 0; i < checkboxes.length; i++) {
+                          checkboxes[i].checked = false; // eslint-ignore-line
+                        }
+                      }}
+                    >
+                      collapse all
+                    </button>
+                  )}
                   <button
                     className="reset-all-filters"
                     onClick={() => {
@@ -928,6 +1014,16 @@ class App extends React.Component {
                   >
                     reset scorpion filters
                   </button>
+
+                  {/* <div style={{ fontWeight: "bold" }}>
+                    <label htmlFor="wallet-filter">filter by wallet: </label>
+                    <input
+                      type="text"
+                      id="wallet-filter"
+                      ref={this.walletFilter}
+                      placeholder="rdx1qsp...."
+                    />
+                  </div> */}
 
                   <h3>Now Filter By Color 🎨</h3>
                   <div className="color-distribution-filters">
@@ -960,10 +1056,12 @@ class App extends React.Component {
                   <div className="scorp-tool-1">
                     {this.state.dontShowColorDistribution ? (
                       <FilteredScorpions
+                        walletFilter={this.walletFilter.current?.value || ""}
                         scorpionFilters={this.state.scorpionFilters}
                       />
                     ) : (
                       <ColorDistribution
+                        walletFilter={this.walletFilter.current?.value || ""}
                         colorFilters={this.state.colorFilters}
                         scorpionFilters={this.state.scorpionFilters}
                       ></ColorDistribution>

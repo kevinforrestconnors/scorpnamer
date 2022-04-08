@@ -229,28 +229,28 @@ div.dark {
 .color-distribution-tool button.scroll-to-top {
   position: fixed;
   left: 0px;
-  bottom: 50px;
+  bottom: 25px;
   z-index: 1;
 }
 
 .color-distribution-tool button.expand-all {
   position: fixed;
   left: 0px;
-  bottom: 25px;
+  bottom: 75px;
   z-index: 1;
 }
 
 .color-distribution-tool button.collapse-all {
   position: fixed;
   left: 0px;
-  bottom: 0;
+  bottom: 50px;
   z-index: 1;
 }
 
 .color-distribution-tool button.reset-all-filters {
   position: fixed;
   left: 0px;
-  bottom: 75px;
+  bottom: 0px;
   z-index: 1;
 }
 

@@ -55,3 +55,10 @@ April 5, 2022
 ====
 Major
   - Adds filters for scorpions
+Minor
+  - Changed the order of the utility buttons 
+
+April 7, 2022
+====
+Major
+  - Adds filters for natty scorpions

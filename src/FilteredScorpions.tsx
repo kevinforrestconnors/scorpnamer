@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getScorpMetadata } from "./scorp-data";
-import { scropEasterEgg } from "./util";
+import { scropEasterEgg, getOwnedScorps } from "./util";
 
 const allScorpIds: string[] = [];
 for (let i = 0; i < 10000; i++) {
@@ -14,8 +14,22 @@ for (let i = 0; i < 10000; i++) {
 }
 
 export function FilteredScorpions(props: {
+  walletFilter: string;
   scorpionFilters: { [attName: string]: Set<string> };
 }): React.ReactElement {
+  const [owners, setOwners] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!owners) {
+      (async () => {
+        const owners = await getOwnedScorps(props.walletFilter);
+        setOwners(owners);
+      })();
+    }
+  }, [owners, props.walletFilter]);
+
+  //console.log(owners);
+
   function passesFilters(id: string): boolean {
     let passFilter = true;
     const attributes: any = getScorpMetadata(id).attributes;
