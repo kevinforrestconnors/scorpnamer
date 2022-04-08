@@ -83,7 +83,8 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
           const colors: any = getScorpMetadata(scorpId).colors;
           const isMono =
             colors.bg2_color === colors.body_color &&
-            attributes.bg_style === "blank";
+            attributes.bg_style === "blank" &&
+            attributes.multicolored === false;
           if (!isMono) {
             passFilter = false;
           }
