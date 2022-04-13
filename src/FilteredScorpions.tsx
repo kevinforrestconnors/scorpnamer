@@ -52,10 +52,13 @@ export function FilteredScorpions(props: {
       const body_color = hexToRgb(colors.body_color);
       const bg2_color = hexToRgb(colors.bg2_color);
 
+      const colorDistance = deltaE(body_color, bg2_color);
+
       passFilter =
         attributes.bg_style === "blank" &&
         attributes.multicolored === false &&
-        deltaE(body_color, bg2_color) < props.otherFilters.psuedoMonoTolerance;
+        colorDistance < props.otherFilters.psuedoMonoTolerance &&
+        colorDistance !== 0;
     }
 
     if (passFilter && props.otherFilters.bodyEqBg2) {
