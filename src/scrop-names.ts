@@ -178,14 +178,19 @@ function pickOneSafe(opts: string[]): string {
 }
 
 export function generateName(scorpId: string): string {
-  const prefixRoll = Math.random(); // > 0.9 = 2 prefix, > 0.3 = 1 prefix, < 0.3 = 0 prefix
-  const suffixRoll = Math.random(); // > 0.9 = 2 suffix, > 0.3 = 1 suffix, < 0.3 = 0 suffix
+  const prefixRoll = Math.random();
+  const suffixRoll = Math.random();
 
-  const numPrefixes = prefixRoll > 0.95 ? 2 : prefixRoll > 0.2 ? 1 : 0;
-  const numSuffixes = suffixRoll > 0.95 ? 2 : suffixRoll > 0.2 ? 1 : 0;
+  const numPrefixes =
+    prefixRoll > 0.99 ? 3 : prefixRoll > 0.9 ? 2 : prefixRoll > 0.5 ? 1 : 0;
+  const numSuffixes =
+    suffixRoll > 0.99 ? 3 : suffixRoll > 0.9 ? 2 : suffixRoll > 0.3 ? 1 : 0;
 
   const extraAdjective =
-    Math.random() > 0.95 ? `${chance.pickone(NAME_LIST.adjectives)} & ` : "";
+    Math.random() > 0.99 ? `${chance.pickone(NAME_LIST.adjectives)} & ` : "";
+
+  const extraAdjective2 =
+    Math.random() > 0.5 ? "" : chance.pickone(NAME_LIST.adjectives);
 
   const p1Opts = prefixes(scorpId);
   const p2Opts = mains(scorpId);
@@ -193,7 +198,10 @@ export function generateName(scorpId: string): string {
 
   let result = "";
   let firstPart = extraAdjective;
-  let middlePart = pickOneSafe(p2Opts);
+  let middlePart =
+    Math.random() > 0.7 && numPrefixes + numSuffixes > 0
+      ? ""
+      : pickOneSafe(p2Opts).trim();
   let lastPart = "";
 
   for (let i = 0; i < numPrefixes; i++) {
@@ -206,20 +214,30 @@ export function generateName(scorpId: string): string {
   }
   lastPart = lastPart.trim();
   if (numSuffixes > 0) {
-    lastPart = Math.random() > 0.8 ? `the ${lastPart}` : lastPart;
+    lastPart =
+      Math.random() > 0.82
+        ? `${
+            Math.random() > 0.2 && firstPart.length + middlePart.length > 0
+              ? ","
+              : ""
+          } the ${extraAdjective2} ${lastPart}`
+        : lastPart;
   }
 
   result = `${firstPart} ${middlePart} ${lastPart}`.trim();
 
-  if (Math.random() > 0.9) {
+  if (Math.random() > 0.85) {
     result = `${pickOneSafe(NAME_LIST.supraPrefixes)}${result}`;
   }
 
-  if (Math.random() > 0.95) {
-    result = `${result}${pickOneSafe(NAME_LIST.supraSuffixes)}`;
+  if (Math.random() > 0.7) {
+    result =
+      Math.random() > 0.5
+        ? `${result}${pickOneSafe(NAME_LIST.nonEnglishSupraSuffixes)}`
+        : `${result}${pickOneSafe(NAME_LIST.supraSuffixes)}`;
   }
 
-  result = result.trim().toLowerCase();
+  result = result.trim().toLowerCase().replace("  ", " ").replace(" ,", ",");
 
-  return result.length > 64 ? generateName(scorpId) : result;
+  return result.length > 64 || result === "" ? generateName(scorpId) : result;
 }
