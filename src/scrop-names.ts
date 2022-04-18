@@ -12,7 +12,10 @@ const chance = new Chance();
 
 const getAffixes = (scorpId: string): string[] => {
   let names: string[] = [];
-  names = names.concat(NAME_LIST.adjectives);
+
+  if (Math.random() < 0.8) {
+    names = names.concat(NAME_LIST.adjectives);
+  }
 
   getColors(scorpId, 10).forEach((color) => {
     names.push(color);
