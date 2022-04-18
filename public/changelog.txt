@@ -75,3 +75,8 @@ April 8, 2022
 ====
 Major
   - Adds filters for psuedomonos
+
+April 17, 2022
+====
+Minor
+  - Adds a bunch more names and changes the algorithm

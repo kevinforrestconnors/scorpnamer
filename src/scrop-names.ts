@@ -12,6 +12,7 @@ const chance = new Chance();
 
 const getAffixes = (scorpId: string): string[] => {
   let names: string[] = [];
+  names = names.concat(NAME_LIST.adjectives);
 
   getColors(scorpId, 10).forEach((color) => {
     names.push(color);
@@ -25,9 +26,15 @@ const getAffixes = (scorpId: string): string[] => {
   }
   if (hasAttribute(scorpId, "has_halo", true)) {
     names = names.concat(NAME_LIST.halo);
+    if (Math.random() > 0.85) {
+      names = names.concat(NAME_LIST.art);
+    }
   }
   if (isBaller(scorpId)) {
     names = names.concat(NAME_LIST.ballers);
+    if (Math.random() > 0.97) {
+      names = names.concat(NAME_LIST.art);
+    }
   }
   if (isDruglord(scorpId)) {
     names = names.concat(NAME_LIST.druglords);
@@ -37,6 +44,7 @@ const getAffixes = (scorpId: string): string[] => {
     getColors(scorpId, 40).forEach((color) => {
       names.push(color);
     });
+    names = names.concat(NAME_LIST.art);
   }
   if (hasAttribute(scorpId, "multicolor_type", "stripes")) {
     names = names.concat(NAME_LIST.striped);
@@ -49,6 +57,9 @@ const getAffixes = (scorpId: string): string[] => {
     hasAttribute(scorpId, "claw_right", "big")
   ) {
     names = names.concat(NAME_LIST.claw_big);
+    if (Math.random() > 0.6) {
+      names = names.concat(NAME_LIST.dinosaur);
+    }
   }
   if (
     hasAttribute(scorpId, "claw_left", "missing") ||
@@ -73,6 +84,9 @@ const getAffixes = (scorpId: string): string[] => {
     hasAttribute(scorpId, "claw_right", "scissors")
   ) {
     names = names.concat(NAME_LIST.edwards);
+    if (Math.random() > 0.99) {
+      names = names.concat(NAME_LIST.insects);
+    }
   }
   if (
     hasAttribute(scorpId, "evil_eye", "blue") ||
@@ -95,6 +109,9 @@ const getAffixes = (scorpId: string): string[] => {
   }
   if (hasAttribute(scorpId, "tail", "fat")) {
     names = names.concat(NAME_LIST.fat_tails);
+    if (Math.random() > 0.9) {
+      names = names.concat(NAME_LIST.dinosaur);
+    }
   }
   if (hasAttribute(scorpId, "tail", "ball")) {
     names = names.concat(NAME_LIST.ball_tails);
@@ -104,15 +121,21 @@ const getAffixes = (scorpId: string): string[] => {
   }
   if (hasAttribute(scorpId, "legs", "stubby")) {
     names = names.concat(NAME_LIST.stubby_legs);
+    if (Math.random() > 0.8) {
+      names = names.concat(NAME_LIST.dinosaur);
+    }
   }
   if (hasAttribute(scorpId, "legs", "skinny")) {
     names = names.concat(NAME_LIST.skinny_legs);
+    if (Math.random() > 0.85) {
+      names = names.concat(NAME_LIST.insects);
+    }
   }
   if (hasAttribute(scorpId, "legs", "insect")) {
     names = names.concat(NAME_LIST.insect_legs);
-  }
-  if (hasAttribute(scorpId, "legs", "fat")) {
-    names = names.concat(NAME_LIST.fat_legs);
+    if (Math.random() > 0.3) {
+      names = names.concat(NAME_LIST.insects);
+    }
   }
 
   return names;
@@ -126,6 +149,8 @@ const prefixes = (scorpId: string): string[] => {
 
 const suffixes = (scorpId: string): string[] => {
   let names = getAffixes(scorpId);
+
+  names = names.concat(NAME_LIST.nouns);
 
   return names;
 };
@@ -153,15 +178,18 @@ export function generateName(scorpId: string): string {
   const prefixRoll = Math.random(); // > 0.9 = 2 prefix, > 0.3 = 1 prefix, < 0.3 = 0 prefix
   const suffixRoll = Math.random(); // > 0.9 = 2 suffix, > 0.3 = 1 suffix, < 0.3 = 0 suffix
 
-  const numPrefixes = prefixRoll > 0.9 ? 2 : prefixRoll > 0.3 ? 1 : 0;
-  const numSuffixes = suffixRoll > 0.9 ? 2 : suffixRoll > 0.3 ? 1 : 0;
+  const numPrefixes = prefixRoll > 0.95 ? 2 : prefixRoll > 0.2 ? 1 : 0;
+  const numSuffixes = suffixRoll > 0.95 ? 2 : suffixRoll > 0.2 ? 1 : 0;
+
+  const extraAdjective =
+    Math.random() > 0.95 ? `${chance.pickone(NAME_LIST.adjectives)} & ` : "";
 
   const p1Opts = prefixes(scorpId);
   const p2Opts = mains(scorpId);
   const p3Opts = suffixes(scorpId);
 
   let result = "";
-  let firstPart = "";
+  let firstPart = extraAdjective;
   let middlePart = pickOneSafe(p2Opts);
   let lastPart = "";
 
@@ -175,7 +203,7 @@ export function generateName(scorpId: string): string {
   }
   lastPart = lastPart.trim();
   if (numSuffixes > 0) {
-    lastPart = Math.random() > 0.85 ? `the ${lastPart}` : lastPart;
+    lastPart = Math.random() > 0.8 ? `the ${lastPart}` : lastPart;
   }
 
   result = `${firstPart} ${middlePart} ${lastPart}`.trim();
