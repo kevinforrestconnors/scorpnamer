@@ -189,6 +189,14 @@ class App extends React.Component {
           />
         </Helmet>
         <div className="App">
+          <div style={{ display: "none" }}>
+            <iframe
+              title="abandoned scorpions theme by loop connection"
+              width="420"
+              height="315"
+              src="https://www.youtube.com/watch?v=1hAg28xkAdI"
+            ></iframe>
+          </div>
           <div className="grid-wrapper">
             <header className="main-head">
               <h1>Abandoned {scropEasterEgg("Scorpion")}s Name Generator</h1>
