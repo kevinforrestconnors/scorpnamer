@@ -191,10 +191,11 @@ class App extends React.Component {
         <div className="App">
           <div style={{ display: "none" }}>
             <iframe
-              title="abandoned scorpions theme by loop connection"
+              title="abandoned scorpions theme song by loop connection"
               width="420"
               height="315"
-              src="https://www.youtube.com/watch?v=1hAg28xkAdI"
+              allow="autoplay"
+              src="https://www.youtube.com/embed/1hAg28xkAdI?&autoplay=1"
             ></iframe>
           </div>
           <div className="grid-wrapper">
@@ -1228,7 +1229,13 @@ class App extends React.Component {
               </div>
               <div>
                 <a href="/changelog.txt" target="_blank" rel="noreferrer">
-                  Last updated April 5, 2022
+                  Last updated June 9, 2022
+                </a>
+              </div>
+              <div>
+                Background music by Loop Connection on Youtube:
+                <a href="https://www.youtube.com/watch?v=1hAg28xkAdI">
+                  https://www.youtube.com/watch?v=1hAg28xkAdI
                 </a>
               </div>
             </footer>

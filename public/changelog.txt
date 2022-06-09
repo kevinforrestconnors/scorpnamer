@@ -80,3 +80,8 @@ April 17, 2022
 ====
 Minor
   - Adds a bunch more names and changes the algorithm
+
+June 9, 2022
+====
+Major
+  - Adds theme song
