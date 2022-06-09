@@ -189,14 +189,19 @@ class App extends React.Component {
           />
         </Helmet>
         <div className="App">
-          <div style={{ display: "none" }}>
-            <iframe
-              title="abandoned scorpions theme song by loop connection"
-              width="420"
-              height="315"
-              allow="autoplay"
-              src="https://www.youtube.com/embed/1hAg28xkAdI?&autoplay=1"
-            ></iframe>
+          <div>
+            <div>
+              <span>{"--->>>"}</span>
+              <iframe
+                title="abandoned scorpions theme song by loop connection"
+                width="7"
+                height="7"
+                allow="autoplay"
+                src="https://www.youtube.com/embed/1hAg28xkAdI?autoplay=1"
+              ></iframe>
+              <span>{"<<<---"}</span>
+            </div>
+            <div>click here for music</div>
           </div>
           <div className="grid-wrapper">
             <header className="main-head">
