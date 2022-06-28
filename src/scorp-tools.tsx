@@ -18,6 +18,9 @@ export function ColorDistribution(props: {
     bodyEqBg2: boolean;
     secondaryEqBg2: boolean;
     secondaryEqBg: boolean;
+    eyeEqBg2: boolean;
+    eyeEqBg: boolean;
+    woooptyFilter: boolean;
   };
 }): React.ReactElement {
   const [owners, setOwners] = useState<string[]>([]);

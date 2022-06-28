@@ -14,6 +14,9 @@ type ColorInfoProps = {
     bodyEqBg2: boolean;
     secondaryEqBg2: boolean;
     secondaryEqBg: boolean;
+    eyeEqBg2: boolean;
+    eyeEqBg: boolean;
+    woooptyFilter: boolean;
   };
 };
 
@@ -118,6 +121,19 @@ export class ColorInfo extends React.Component<ColorInfoProps> {
             attributes.multicolored &&
             colors.secondary_color === colors.bg_color &&
             attributes.bg_style !== "blank";
+        }
+        if (passFilter && this.props.otherFilters.eyeEqBg2) {
+          passFilter = colors.eye_color === colors.bg2_color;
+        }
+        if (passFilter && this.props.otherFilters.eyeEqBg) {
+          passFilter = colors.eye_color === colors.bg_color;
+        }
+        if (passFilter && this.props.otherFilters.woooptyFilter) {
+          const body_color = hexToRgb(colors.body_color);
+          const outline_color = hexToRgb(colors.outline_color);
+
+          const colorDistance = deltaE(body_color, outline_color);
+          passFilter = colorDistance < 20;
         }
 
         if (passFilter) {

@@ -36,6 +36,9 @@ class App extends React.Component {
       bodyEqBg2: boolean;
       secondaryEqBg2: boolean;
       secondaryEqBg: boolean;
+      eyeEqBg2: boolean;
+      eyeEqBg: boolean;
+      woooptyFilter: boolean;
     };
     dontShowColorDistribution: boolean;
   };
@@ -90,6 +93,9 @@ class App extends React.Component {
         bodyEqBg2: false,
         secondaryEqBg2: false,
         secondaryEqBg: false,
+        eyeEqBg2: false,
+        eyeEqBg: false,
+        woooptyFilter: false,
       },
       dontShowColorDistribution: false,
     };
@@ -1113,7 +1119,6 @@ class App extends React.Component {
 
                   <h3>Now Filter By Color 🎨</h3>
                   <div>
-                    {" "}
                     <label htmlFor="bodyEqBg2">
                       <b>body color = background color</b>
                       <input
@@ -1133,7 +1138,6 @@ class App extends React.Component {
                     </label>
                   </div>
                   <div>
-                    {" "}
                     <label htmlFor="secondaryEqBg2">
                       <b>secondary color = background color</b>
                       <input
@@ -1165,6 +1169,63 @@ class App extends React.Component {
                             otherFilters: {
                               ...this.state.otherFilters,
                               secondaryEqBg: checked,
+                            },
+                          });
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label htmlFor="eyeEqBg2">
+                      <b>eye color = background color</b>
+                      <input
+                        type="checkbox"
+                        id="eyeEqBg2"
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+
+                          this.setState({
+                            otherFilters: {
+                              ...this.state.otherFilters,
+                              eyeEqBg2: checked,
+                            },
+                          });
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label htmlFor="eyeEqBg">
+                      <b>eye color = secondary background color</b>
+                      <input
+                        type="checkbox"
+                        id="eyeEqBg"
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+
+                          this.setState({
+                            otherFilters: {
+                              ...this.state.otherFilters,
+                              eyeEqBg: checked,
+                            },
+                          });
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label htmlFor="woooptyFilter">
+                      <b>something woooptydoo would like</b>
+                      <input
+                        type="checkbox"
+                        id="woooptyFilter"
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+
+                          this.setState({
+                            otherFilters: {
+                              ...this.state.otherFilters,
+                              woooptyFilter: checked,
                             },
                           });
                         }}
@@ -1234,7 +1295,7 @@ class App extends React.Component {
               </div>
               <div>
                 <a href="/changelog.txt" target="_blank" rel="noreferrer">
-                  Last updated June 9, 2022
+                  Last updated June 28, 2022
                 </a>
               </div>
               <div>
