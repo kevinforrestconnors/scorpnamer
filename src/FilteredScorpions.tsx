@@ -86,9 +86,20 @@ export function FilteredScorpions(props: {
     if (passFilter && props.otherFilters.woooptyFilter) {
       const body_color = hexToRgb(colors.body_color);
       const outline_color = hexToRgb(colors.outline_color);
+      const bg2_color = hexToRgb(colors.bg2_color);
+      const bg_color = hexToRgb(colors.bg_color);
 
-      const colorDistance = deltaE(body_color, outline_color);
-      passFilter = colorDistance < 20;
+      const bodyOutLineColorDistance = deltaE(body_color, outline_color);
+      const backgroundBodyColorDistance = Math.min(
+        deltaE(body_color, bg2_color),
+        deltaE(body_color, bg_color)
+      );
+      passFilter =
+        attributes.outline_type !== "black" &&
+        attributes.outline_type !== "white" &&
+        (bodyOutLineColorDistance < 15 ||
+          (backgroundBodyColorDistance < 20 && bodyOutLineColorDistance < 40) ||
+          (backgroundBodyColorDistance < 25 && bodyOutLineColorDistance < 30));
     }
 
     if (passFilter) {

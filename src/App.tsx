@@ -1117,7 +1117,7 @@ class App extends React.Component {
                     />
                   </div> */}
 
-                  <h3>Now Filter By Color 🎨</h3>
+                  <h3 className="filter-by-color">Now Filter By Color 🎨</h3>
                   <div>
                     <label htmlFor="bodyEqBg2">
                       <b>body color = background color</b>
@@ -1243,6 +1243,7 @@ class App extends React.Component {
                         id="fuck_color_filters-show_all"
                         name="false"
                         value="fuck_color_filters-show_all"
+                        defaultChecked={this.state.dontShowColorDistribution}
                         onClick={(e) => {
                           this.setState({
                             dontShowColorDistribution: (
@@ -1281,6 +1282,9 @@ class App extends React.Component {
             <footer className="main-footer">
               <div>
                 {" "}
+                <a href="https://radit.io/community/scroplife"  target="_blank" rel="noreferrer">
+                  <img width="30px" height="30px" style={{border: "4px double black"}} alt="link to radit scroplife.com project" src="https://radit.io/img/radit_icon_external.png" />
+                </a>
                 <div>
                   This app is not officially related to the Abandoned
                   {scropEasterEgg("Scorpion")}s project. I am an independent
