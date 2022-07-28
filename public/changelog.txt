@@ -91,3 +91,10 @@ June 28, 2022
 Major
   - Adds filters for eye colors matching background(s)
   - Adds woooptyfilter
+
+  
+July 28, 2022
+====
+Minor
+  - Adds radit link
+  - Change to black background

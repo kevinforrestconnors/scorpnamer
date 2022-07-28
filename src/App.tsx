@@ -1282,7 +1282,7 @@ class App extends React.Component {
             <footer className="main-footer">
               <div>
                 {" "}
-                <a href="https://radit.io/community/scroplife"  target="_blank" rel="noreferrer">
+                <a href="https://radit.io/community/scroplife" target="_blank" rel="noreferrer">
                   <img width="30px" height="30px" style={{border: "4px double black"}} alt="link to radit scroplife.com project" src="https://radit.io/img/radit_icon_external.png" />
                 </a>
                 <div>

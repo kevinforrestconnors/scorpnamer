@@ -1,10 +1,6 @@
 body {
   color: #feeeed !important;
   background-color: black;
-
-  * {
-    color: #feeeed !important;
-  }
 }
 
 h1,
@@ -212,7 +208,7 @@ label {
 
 .color-info_scorps-of-color-header {
   padding: 0;
-  margin: 0 0;
+  margin: 0;
   font-weight: bold;
   color: rgb(36, 36, 36);
   text-shadow: 1px 2px 5px #cccccc;
@@ -260,7 +256,7 @@ div.dark {
   color: rgb(36, 36, 36);
 }
 
-.filter-by-color: {
+.filter-by-color {
   text-align: left;
 }
 
@@ -308,8 +304,6 @@ div.dark {
 .filter_segment {
   text-align: left;
   vertical-align: top;
-  /* width: 180px;
-	margin: 16px; */
   white-space: nowrap;
 }
 
