@@ -13,6 +13,48 @@ h6 {
   color: #feeeed;
 }
 
+h3.tagline {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.scropgen-container {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px 50px;
+  background-color: white;
+  border: 10px groove grey;
+  position: relative;
+}
+
+h2.scropgen-title {
+  color: black;
+}
+
+@keyframes rotateNewTagBackAndForth {
+  0% {
+    transform: rotateZ(15deg);
+  }
+  50% {
+    transform: rotateZ(-15deg);
+  }
+  100% {
+    transform: rotateZ(15deg);
+  }
+}
+
+h2.scropgen-title::after {
+  content: 'New!';
+  color: yellow;
+  text-shadow: 0 2px 1px black;
+  font-size: xxx-large;
+  position: absolute;
+  top: -30px;
+  right: -56px;
+  transform: rotateZ(15deg);
+  animation: rotateNewTagBackAndForth 3s infinite;
+}
+
 .App {
   text-align: center;
 }
@@ -88,21 +130,21 @@ label {
   display: grid;
   gap: 20px;
   grid-template-areas:
-    "header"
-    "nav"
-    "sidebar"
-    "content"
-    "footer";
+    'header'
+    'nav'
+    'sidebar'
+    'content'
+    'footer';
 }
 
 @media (min-width: 700px) {
   .grid-wrapper {
     grid-template-columns: 1fr 7fr 1fr;
     grid-template-areas:
-      "header  header  header"
-      "sidebar content a"
-      "sidebar content a"
-      "footer  footer  footer";
+      'header  header  header'
+      'sidebar content a'
+      'sidebar content a'
+      'footer  footer  footer';
   }
   nav ul {
     flex-direction: column;
@@ -238,14 +280,10 @@ label {
   width: 100%;
 }
 
-.color-info_scorps-of-color-container.light
-  .color-info_scorps-of-color-element
-  a {
+.color-info_scorps-of-color-container.light .color-info_scorps-of-color-element a {
   color: rgb(236, 236, 236);
 }
-.color-info_scorps-of-color-container.dark
-  .color-info_scorps-of-color-element
-  a {
+.color-info_scorps-of-color-container.dark .color-info_scorps-of-color-element a {
   color: rgb(36, 36, 36);
 }
 
