@@ -98,3 +98,11 @@ July 28, 2022
 Minor
   - Adds radit link
   - Change to black background
+
+September 23, 2022
+====
+Major
+  - adds scropgen (scorpion generator app)
+  - adds taglines
+Minor
+  - rewords sections of site
