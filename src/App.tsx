@@ -106,7 +106,7 @@ class App extends React.Component {
     fetch(
       'https://radstrike.com/db/api/items/?format=json&collection__name=scorpions&limit=100&offset=0&owner=&has_ask=true',, 
         {
-            method: "POST", 
+            method: "GET", 
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
