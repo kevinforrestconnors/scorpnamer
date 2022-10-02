@@ -106,3 +106,9 @@ Major
   - adds taglines
 Minor
   - rewords sections of site
+
+  
+October 1, 2022
+====
+Major
+  - adds floor price from rarechest.io
