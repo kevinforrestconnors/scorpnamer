@@ -104,14 +104,14 @@ class App extends React.Component {
   componentDidMount() {
     this.loadNewScorp(this.state.scorpId)
     fetch(
-      'https://radstrike.com/db/api/items/?format=json&collection__name=scorpions&limit=100&offset=0&owner=&has_ask=true',, 
-        {
-            method: "GET", 
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }
+      'https://radstrike.com/db/api/items/?format=json&collection__name=scorpions&limit=100&offset=0&owner=&has_ask=true',
+      {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
       .then((response) => {
         if (response.ok) {
