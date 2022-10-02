@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react'
+import React from 'react'
 import './App.css'
 import { generateName } from './scrop-names'
 import { ColorDistribution } from './scorp-tools'
@@ -8,6 +8,7 @@ import Helmet from 'react-helmet'
 import { ScorpPhoto } from './ScorpPhoto'
 import { scropEasterEgg, tagline } from './util/index'
 import { MANUAL_TAGGED_COLORS } from './constants'
+import { getFloorPrice } from './scorp-data'
 
 const chance = new Chance()
 
@@ -19,9 +20,11 @@ function rollScorp() {
   return `${sd()}${sd()}${sd()}${sd()}`
 }
 
+export type MarketplaceListings = { results: [{ series_no: number; live_asks: [{ amt: string }] }] }
+
 class App extends React.Component {
-  walletFilter: RefObject<HTMLInputElement>
   state: {
+    marketplaceListings: MarketplaceListings
     scorpId: string
     image: string
     faviconImage: string
@@ -46,8 +49,8 @@ class App extends React.Component {
   constructor(props: any) {
     super(props)
     const scorpId = rollScorp()
-    this.walletFilter = React.createRef()
     this.state = {
+      marketplaceListings: {} as MarketplaceListings,
       scorpId,
       image: `/img/${scorpId}_large.png`,
       faviconImage: '',
@@ -100,6 +103,13 @@ class App extends React.Component {
 
   componentDidMount() {
     this.loadNewScorp(this.state.scorpId)
+    fetch(
+      'https://radstrike.com/db/api/items/?format=json&collection__name=scorpions&limit=100&offset=0&owner=&has_ask=true'
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ marketplaceListings: data })
+      })
   }
 
   handleSelectScorpChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,6 +187,13 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.marketplaceListings)
+
+    const { lowestPriceText, lowestPriceLink } = getFloorPrice(this.state.marketplaceListings, {
+      scorpionFilters: this.state.scorpionFilters,
+      otherFilters: this.state.otherFilters,
+    })
+
     return (
       <div>
         <Helmet>
@@ -375,7 +392,16 @@ class App extends React.Component {
                     <span>tolerance: {this.state.otherFilters.psuedoMonoTolerance}</span>
                   </label>
                 </div>
-
+                <div style={{ margin: '10px 0' }}>
+                  <a
+                    href={lowestPriceLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ backgroundColor: 'white', padding: '5px' }}
+                  >
+                    {lowestPriceText}
+                  </a>
+                </div>
                 <div className="filters_container">
                   <div
                     className="filters"
@@ -794,16 +820,6 @@ class App extends React.Component {
                     reset scorpion filters
                   </button>
 
-                  {/* <div style={{ fontWeight: "bold" }}>
-                    <label htmlFor="wallet-filter">filter by wallet: </label>
-                    <input
-                      type="text"
-                      id="wallet-filter"
-                      ref={this.walletFilter}
-                      placeholder="rdx1qsp...."
-                    />
-                  </div> */}
-
                   <h3 className="filter-by-color">Now Filter By Color 🎨</h3>
                   <div>
                     <label htmlFor="bodyEqBg2">
@@ -945,13 +961,11 @@ class App extends React.Component {
                   <div className="scorp-tool-1">
                     {this.state.dontShowColorDistribution ? (
                       <FilteredScorpions
-                        walletFilter={this.walletFilter.current?.value || ''}
                         scorpionFilters={this.state.scorpionFilters}
                         otherFilters={this.state.otherFilters}
                       />
                     ) : (
                       <ColorDistribution
-                        walletFilter={this.walletFilter.current?.value || ''}
                         colorFilters={this.state.colorFilters}
                         scorpionFilters={this.state.scorpionFilters}
                         otherFilters={this.state.otherFilters}

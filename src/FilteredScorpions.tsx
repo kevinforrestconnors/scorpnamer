@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { getScorpMetadata } from './scorp-data'
-import { scropEasterEgg, getOwnedScorps, deltaE, hexToRgb } from './util'
+import { scropEasterEgg, deltaE, hexToRgb } from './util'
 
 const allScorpIds: string[] = []
 for (let i = 0; i < 10000; i++) {
@@ -13,8 +13,80 @@ for (let i = 0; i < 10000; i++) {
   allScorpIds.push(sid)
 }
 
-export function FilteredScorpions(props: {
-  walletFilter: string
+export function passesFilters(id: string, props: FilteredScorpionsProps): boolean {
+  let passFilter = true
+  const attributes: any = getScorpMetadata(id).attributes
+  const colors: any = getScorpMetadata(id).colors
+
+  if (passFilter && props.otherFilters.mono) {
+    passFilter =
+      colors.bg2_color === colors.body_color && attributes.bg_style === 'blank' && attributes.multicolored === false
+  }
+
+  if (passFilter && props.otherFilters.psuedoMono) {
+    const body_color = hexToRgb(colors.body_color)
+    const bg2_color = hexToRgb(colors.bg2_color)
+
+    const colorDistance = deltaE(body_color, bg2_color)
+
+    passFilter =
+      attributes.bg_style === 'blank' &&
+      attributes.multicolored === false &&
+      colorDistance < props.otherFilters.psuedoMonoTolerance &&
+      colorDistance !== 0
+  }
+
+  if (passFilter && props.otherFilters.bodyEqBg2) {
+    passFilter = colors.body_color === colors.bg2_color
+  }
+  if (passFilter && props.otherFilters.secondaryEqBg2) {
+    passFilter = attributes.multicolored && colors.secondary_color === colors.bg2_color
+  }
+  if (passFilter && props.otherFilters.secondaryEqBg) {
+    passFilter =
+      attributes.multicolored && colors.secondary_color === colors.bg_color && attributes.bg_style !== 'blank'
+  }
+  if (passFilter && props.otherFilters.eyeEqBg2) {
+    passFilter = colors.eye_color === colors.bg2_color
+  }
+  if (passFilter && props.otherFilters.eyeEqBg) {
+    passFilter = colors.eye_color === colors.bg_color
+  }
+  if (passFilter && props.otherFilters.woooptyFilter) {
+    const body_color = hexToRgb(colors.body_color)
+    const outline_color = hexToRgb(colors.outline_color)
+    const bg2_color = hexToRgb(colors.bg2_color)
+    const bg_color = hexToRgb(colors.bg_color)
+
+    const bodyOutLineColorDistance = deltaE(body_color, outline_color)
+    const backgroundBodyColorDistance = Math.min(deltaE(body_color, bg2_color), deltaE(body_color, bg_color))
+    passFilter =
+      attributes.outline_type !== 'black' &&
+      attributes.outline_type !== 'white' &&
+      (bodyOutLineColorDistance < 15 ||
+        (backgroundBodyColorDistance < 20 && bodyOutLineColorDistance < 40) ||
+        (backgroundBodyColorDistance < 25 && bodyOutLineColorDistance < 30))
+  }
+
+  if (passFilter) {
+    for (const traitName of Object.keys(attributes)) {
+      if (!props.scorpionFilters[traitName] || props.scorpionFilters[traitName].size === 0) {
+        continue
+      }
+
+      if (props.scorpionFilters[traitName].has(attributes[traitName].toString())) {
+        continue
+      } else {
+        passFilter = false
+        break
+      }
+    }
+  }
+
+  return passFilter
+}
+
+export type FilteredScorpionsProps = {
   scorpionFilters: { [attName: string]: Set<string> }
   otherFilters: {
     mono: boolean
@@ -27,95 +99,13 @@ export function FilteredScorpions(props: {
     eyeEqBg: boolean
     woooptyFilter: boolean
   }
-}): React.ReactElement {
-  const [owners, setOwners] = useState<string[]>([])
+}
 
-  useEffect(() => {
-    if (!owners) {
-      ;(async () => {
-        const owners = await getOwnedScorps(props.walletFilter)
-        setOwners(owners)
-      })()
-    }
-  }, [owners, props.walletFilter])
-
-  function passesFilters(id: string): boolean {
-    let passFilter = true
-    const attributes: any = getScorpMetadata(id).attributes
-    const colors: any = getScorpMetadata(id).colors
-
-    if (passFilter && props.otherFilters.mono) {
-      passFilter =
-        colors.bg2_color === colors.body_color && attributes.bg_style === 'blank' && attributes.multicolored === false
-    }
-
-    if (passFilter && props.otherFilters.psuedoMono) {
-      const body_color = hexToRgb(colors.body_color)
-      const bg2_color = hexToRgb(colors.bg2_color)
-
-      const colorDistance = deltaE(body_color, bg2_color)
-
-      passFilter =
-        attributes.bg_style === 'blank' &&
-        attributes.multicolored === false &&
-        colorDistance < props.otherFilters.psuedoMonoTolerance &&
-        colorDistance !== 0
-    }
-
-    if (passFilter && props.otherFilters.bodyEqBg2) {
-      passFilter = colors.body_color === colors.bg2_color
-    }
-    if (passFilter && props.otherFilters.secondaryEqBg2) {
-      passFilter = attributes.multicolored && colors.secondary_color === colors.bg2_color
-    }
-    if (passFilter && props.otherFilters.secondaryEqBg) {
-      passFilter =
-        attributes.multicolored && colors.secondary_color === colors.bg_color && attributes.bg_style !== 'blank'
-    }
-    if (passFilter && props.otherFilters.eyeEqBg2) {
-      passFilter = colors.eye_color === colors.bg2_color
-    }
-    if (passFilter && props.otherFilters.eyeEqBg) {
-      passFilter = colors.eye_color === colors.bg_color
-    }
-    if (passFilter && props.otherFilters.woooptyFilter) {
-      const body_color = hexToRgb(colors.body_color)
-      const outline_color = hexToRgb(colors.outline_color)
-      const bg2_color = hexToRgb(colors.bg2_color)
-      const bg_color = hexToRgb(colors.bg_color)
-
-      const bodyOutLineColorDistance = deltaE(body_color, outline_color)
-      const backgroundBodyColorDistance = Math.min(deltaE(body_color, bg2_color), deltaE(body_color, bg_color))
-      passFilter =
-        attributes.outline_type !== 'black' &&
-        attributes.outline_type !== 'white' &&
-        (bodyOutLineColorDistance < 15 ||
-          (backgroundBodyColorDistance < 20 && bodyOutLineColorDistance < 40) ||
-          (backgroundBodyColorDistance < 25 && bodyOutLineColorDistance < 30))
-    }
-
-    if (passFilter) {
-      for (const traitName of Object.keys(attributes)) {
-        if (!props.scorpionFilters[traitName] || props.scorpionFilters[traitName].size === 0) {
-          continue
-        }
-
-        if (props.scorpionFilters[traitName].has(attributes[traitName].toString())) {
-          continue
-        } else {
-          passFilter = false
-          break
-        }
-      }
-    }
-
-    return passFilter
-  }
-
+export function FilteredScorpions(props: FilteredScorpionsProps): React.ReactElement {
   let scorpions = []
 
   for (const id of allScorpIds) {
-    if (passesFilters(id)) {
+    if (passesFilters(id, props)) {
       scorpions.push(
         <a
           key={id}

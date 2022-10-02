@@ -18,14 +18,6 @@ export function isValidRadixAddress(address: string): boolean {
   return address.length === 65 && address.indexOf('rdx1') === 0
 }
 
-export async function getOwnedScorps(address: string): Promise<any> {
-  const owners = await fetch('https://radstrike.com/scorpions/reserved.json', {
-    mode: 'no-cors',
-  })
-
-  return owners.json()
-}
-
 export function deltaE(rgbA: [number, number, number], rgbB: [number, number, number]) {
   let labA = rgb2lab(rgbA)
   let labB = rgb2lab(rgbB)
@@ -84,6 +76,8 @@ export function tagline(): string {
   }
 
   return pickRandom([
+    `Everything is traced man, you joined groups right after our conversations. You told me you where interested in my bundle with a fixed price written in the group. After telling you I would finalize the trade later that day you spent all you emptied your wallet in other nfts (which is your right lol) and never told anything to me to stop our trade.`,
+    `Not mobile friendly!`,
     `Lol a blue chip? An nft which is one of 10000 pixelated ${scropEasterEgg(
       'scorpion'
     )}s in a network that hasn’t proved itself? I’m insanely bullish in Radix, but c’mon. /cmon`,
