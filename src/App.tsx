@@ -106,7 +106,11 @@ class App extends React.Component {
     fetch(
       'https://radstrike.com/db/api/items/?format=json&collection__name=scorpions&limit=100&offset=0&owner=&has_ask=true'
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+      })
       .then((data) => {
         this.setState({ marketplaceListings: data })
       })
